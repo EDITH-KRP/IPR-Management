@@ -345,7 +345,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"payment\",\"type\":\"uint256\"},{\"internalType\":\"bytes4\",\"name\":\"callbackFunctionId\",\"type\":\"bytes4\"},{\"internalType\":\"uint256\",\"name\":\"expiration\",\"type\":\"uint256\"}],\"name\":\"cancelOracleRequest\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address payable[]\",\"name\":\"receivers\",\"type\":\"address[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"}],\"name\":\"distributeFunds\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"payment\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"callbackAddress\",\"type\":\"address\"},{\"internalType\":\"bytes4\",\"name\":\"callbackFunctionId\",\"type\":\"bytes4\"},{\"internalType\":\"uint256\",\"name\":\"expiration\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"data\",\"type\":\"bytes32\"}],\"name\":\"fulfillOracleRequest\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"payment\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"callbackAddress\",\"type\":\"address\"},{\"internalType\":\"bytes4\",\"name\":\"callbackFunctionId\",\"type\":\"bytes4\"},{\"internalType\":\"uint256\",\"name\":\"expiration\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"fulfillOracleRequest2\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getAuthorizedSenders\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getForwarder\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"node\",\"type\":\"address\"}],\"name\":\"isAuthorizedSender\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"payment\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"specId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes4\",\"name\":\"callbackFunctionId\",\"type\":\"bytes4\"},{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dataVersion\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"operatorRequest\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"requestPrice\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"serviceAgreementID\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"callbackAddress\",\"type\":\"address\"},{\"internalType\":\"bytes4\",\"name\":\"callbackFunctionId\",\"type\":\"bytes4\"},{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dataVersion\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"oracleRequest\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ownerTransferAndCall\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"success\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"senders\",\"type\":\"address[]\"}],\"name\":\"setAuthorizedSenders\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdrawable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"@chainlink/contracts/src/v0.8/interfaces/OperatorInterface.sol\":\"OperatorInterface\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol\":{\"keccak256\":\"0xa8adfbd0326c982c38ea3808a4da52f0a51807241787c4bd28235bbe86707c04\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://364e3be6190a68fbe84e4ede560af3ccede8d36e40e91378b4de042202c6e86a\",\"dweb:/ipfs/QmNpCP9j3FhBd1hDofg1uMCYiXBKNTU95n1Lxbnnj12oxw\"]},\"@chainlink/contracts/src/v0.8/interfaces/OperatorInterface.sol\":{\"keccak256\":\"0x79a7c77b8f87be6ef02a566765077ed599724b060a209f34f8907eec5615da68\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b6ed9275abc614a37a13f86c148f3a4341d955a6b52a1a655357505e0926caab\",\"dweb:/ipfs/Qmaqgq3HiakdSBAe9NtGXYMxVFBjTkLbzyiiyjJUJ1g1M3\"]},\"@chainlink/contracts/src/v0.8/interfaces/OracleInterface.sol\":{\"keccak256\":\"0x3a86242e005bad9daf1b4794399a81ba373069355f38c8a07b58e57abc32513a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba8fbc2ccf2b3dfc8249306b7dc63624a4ec6f6ee43649d631f7363710c763b6\",\"dweb:/ipfs/QmePqh8R8EZMygYkawshsWArTrVA8VCdamLGV6ZZsVJgTz\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.1+commit.df193b15\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"payment\",\"type\":\"uint256\"},{\"internalType\":\"bytes4\",\"name\":\"callbackFunctionId\",\"type\":\"bytes4\"},{\"internalType\":\"uint256\",\"name\":\"expiration\",\"type\":\"uint256\"}],\"name\":\"cancelOracleRequest\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address payable[]\",\"name\":\"receivers\",\"type\":\"address[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"}],\"name\":\"distributeFunds\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"payment\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"callbackAddress\",\"type\":\"address\"},{\"internalType\":\"bytes4\",\"name\":\"callbackFunctionId\",\"type\":\"bytes4\"},{\"internalType\":\"uint256\",\"name\":\"expiration\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"data\",\"type\":\"bytes32\"}],\"name\":\"fulfillOracleRequest\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"requestId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"payment\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"callbackAddress\",\"type\":\"address\"},{\"internalType\":\"bytes4\",\"name\":\"callbackFunctionId\",\"type\":\"bytes4\"},{\"internalType\":\"uint256\",\"name\":\"expiration\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"fulfillOracleRequest2\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getAuthorizedSenders\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getForwarder\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"node\",\"type\":\"address\"}],\"name\":\"isAuthorizedSender\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"payment\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"specId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes4\",\"name\":\"callbackFunctionId\",\"type\":\"bytes4\"},{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dataVersion\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"operatorRequest\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"requestPrice\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"serviceAgreementID\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"callbackAddress\",\"type\":\"address\"},{\"internalType\":\"bytes4\",\"name\":\"callbackFunctionId\",\"type\":\"bytes4\"},{\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"dataVersion\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"oracleRequest\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"ownerTransferAndCall\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"success\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"senders\",\"type\":\"address[]\"}],\"name\":\"setAuthorizedSenders\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdrawable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"@chainlink/contracts/src/v0.8/interfaces/OperatorInterface.sol\":\"OperatorInterface\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol\":{\"keccak256\":\"0xa8adfbd0326c982c38ea3808a4da52f0a51807241787c4bd28235bbe86707c04\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://364e3be6190a68fbe84e4ede560af3ccede8d36e40e91378b4de042202c6e86a\",\"dweb:/ipfs/QmNpCP9j3FhBd1hDofg1uMCYiXBKNTU95n1Lxbnnj12oxw\"]},\"@chainlink/contracts/src/v0.8/interfaces/OperatorInterface.sol\":{\"keccak256\":\"0x79a7c77b8f87be6ef02a566765077ed599724b060a209f34f8907eec5615da68\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b6ed9275abc614a37a13f86c148f3a4341d955a6b52a1a655357505e0926caab\",\"dweb:/ipfs/Qmaqgq3HiakdSBAe9NtGXYMxVFBjTkLbzyiiyjJUJ1g1M3\"]},\"@chainlink/contracts/src/v0.8/interfaces/OracleInterface.sol\":{\"keccak256\":\"0x3a86242e005bad9daf1b4794399a81ba373069355f38c8a07b58e57abc32513a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba8fbc2ccf2b3dfc8249306b7dc63624a4ec6f6ee43649d631f7363710c763b6\",\"dweb:/ipfs/QmePqh8R8EZMygYkawshsWArTrVA8VCdamLGV6ZZsVJgTz\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -387,7 +387,6 @@
         "absolutePath": "@chainlink/contracts/src/v0.8/interfaces/OracleInterface.sol",
         "file": "./OracleInterface.sol",
         "id": 1254,
-        "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 1332,
         "sourceUnit": 1371,
@@ -399,7 +398,6 @@
         "absolutePath": "@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol",
         "file": "./ChainlinkRequestInterface.sol",
         "id": 1255,
-        "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 1332,
         "sourceUnit": 1077,
@@ -414,9 +412,6 @@
             "baseName": {
               "id": 1256,
               "name": "OracleInterface",
-              "nameLocations": [
-                "163:15:7"
-              ],
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 1370,
               "src": "163:15:7"
@@ -429,9 +424,6 @@
             "baseName": {
               "id": 1258,
               "name": "ChainlinkRequestInterface",
-              "nameLocations": [
-                "180:25:7"
-              ],
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 1076,
               "src": "180:25:7"
@@ -441,8 +433,10 @@
             "src": "180:25:7"
           }
         ],
-        "canonicalName": "OperatorInterface",
-        "contractDependencies": [],
+        "contractDependencies": [
+          1076,
+          1370
+        ],
         "contractKind": "interface",
         "fullyImplemented": false,
         "id": 1331,
@@ -452,7 +446,6 @@
           1370
         ],
         "name": "OperatorInterface",
-        "nameLocation": "142:17:7",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
@@ -462,7 +455,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "operatorRequest",
-            "nameLocation": "219:15:7",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1274,
@@ -473,7 +465,6 @@
                   "id": 1261,
                   "mutability": "mutable",
                   "name": "sender",
-                  "nameLocation": "248:6:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1276,
                   "src": "240:14:7",
@@ -501,7 +492,6 @@
                   "id": 1263,
                   "mutability": "mutable",
                   "name": "payment",
-                  "nameLocation": "268:7:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1276,
                   "src": "260:15:7",
@@ -528,7 +518,6 @@
                   "id": 1265,
                   "mutability": "mutable",
                   "name": "specId",
-                  "nameLocation": "289:6:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1276,
                   "src": "281:14:7",
@@ -555,7 +544,6 @@
                   "id": 1267,
                   "mutability": "mutable",
                   "name": "callbackFunctionId",
-                  "nameLocation": "308:18:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1276,
                   "src": "301:25:7",
@@ -582,7 +570,6 @@
                   "id": 1269,
                   "mutability": "mutable",
                   "name": "nonce",
-                  "nameLocation": "340:5:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1276,
                   "src": "332:13:7",
@@ -609,7 +596,6 @@
                   "id": 1271,
                   "mutability": "mutable",
                   "name": "dataVersion",
-                  "nameLocation": "359:11:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1276,
                   "src": "351:19:7",
@@ -636,7 +622,6 @@
                   "id": 1273,
                   "mutability": "mutable",
                   "name": "data",
-                  "nameLocation": "391:4:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1276,
                   "src": "376:19:7",
@@ -680,7 +665,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "fulfillOracleRequest2",
-            "nameLocation": "422:21:7",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1289,
@@ -691,7 +675,6 @@
                   "id": 1278,
                   "mutability": "mutable",
                   "name": "requestId",
-                  "nameLocation": "457:9:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1293,
                   "src": "449:17:7",
@@ -718,7 +701,6 @@
                   "id": 1280,
                   "mutability": "mutable",
                   "name": "payment",
-                  "nameLocation": "480:7:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1293,
                   "src": "472:15:7",
@@ -745,7 +727,6 @@
                   "id": 1282,
                   "mutability": "mutable",
                   "name": "callbackAddress",
-                  "nameLocation": "501:15:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1293,
                   "src": "493:23:7",
@@ -773,7 +754,6 @@
                   "id": 1284,
                   "mutability": "mutable",
                   "name": "callbackFunctionId",
-                  "nameLocation": "529:18:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1293,
                   "src": "522:25:7",
@@ -800,7 +780,6 @@
                   "id": 1286,
                   "mutability": "mutable",
                   "name": "expiration",
-                  "nameLocation": "561:10:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1293,
                   "src": "553:18:7",
@@ -827,7 +806,6 @@
                   "id": 1288,
                   "mutability": "mutable",
                   "name": "data",
-                  "nameLocation": "592:4:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1293,
                   "src": "577:19:7",
@@ -861,7 +839,6 @@
                   "id": 1291,
                   "mutability": "mutable",
                   "name": "",
-                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 1293,
                   "src": "619:4:7",
@@ -899,7 +876,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "ownerTransferAndCall",
-            "nameLocation": "638:20:7",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1300,
@@ -910,7 +886,6 @@
                   "id": 1295,
                   "mutability": "mutable",
                   "name": "to",
-                  "nameLocation": "672:2:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1304,
                   "src": "664:10:7",
@@ -938,7 +913,6 @@
                   "id": 1297,
                   "mutability": "mutable",
                   "name": "value",
-                  "nameLocation": "688:5:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1304,
                   "src": "680:13:7",
@@ -965,7 +939,6 @@
                   "id": 1299,
                   "mutability": "mutable",
                   "name": "data",
-                  "nameLocation": "714:4:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1304,
                   "src": "699:19:7",
@@ -999,7 +972,6 @@
                   "id": 1302,
                   "mutability": "mutable",
                   "name": "success",
-                  "nameLocation": "746:7:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1304,
                   "src": "741:12:7",
@@ -1037,7 +1009,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "distributeFunds",
-            "nameLocation": "768:15:7",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1311,
@@ -1048,7 +1019,6 @@
                   "id": 1307,
                   "mutability": "mutable",
                   "name": "receivers",
-                  "nameLocation": "811:9:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1313,
                   "src": "784:36:7",
@@ -1085,7 +1055,6 @@
                   "id": 1310,
                   "mutability": "mutable",
                   "name": "amounts",
-                  "nameLocation": "841:7:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1313,
                   "src": "822:26:7",
@@ -1138,7 +1107,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "getAuthorizedSenders",
-            "nameLocation": "880:20:7",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1314,
@@ -1155,7 +1123,6 @@
                   "id": 1317,
                   "mutability": "mutable",
                   "name": "",
-                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 1319,
                   "src": "921:16:7",
@@ -1203,7 +1170,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "setAuthorizedSenders",
-            "nameLocation": "952:20:7",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1323,
@@ -1214,7 +1180,6 @@
                   "id": 1322,
                   "mutability": "mutable",
                   "name": "senders",
-                  "nameLocation": "992:7:7",
                   "nodeType": "VariableDeclaration",
                   "scope": 1325,
                   "src": "973:26:7",
@@ -1268,7 +1233,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "getForwarder",
-            "nameLocation": "1023:12:7",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 1326,
@@ -1285,7 +1249,6 @@
                   "id": 1328,
                   "mutability": "mutable",
                   "name": "",
-                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 1330,
                   "src": "1056:7:7",
@@ -1319,20 +1282,18 @@
           }
         ],
         "scope": 1332,
-        "src": "132:935:7",
-        "usedErrors": [],
-        "usedEvents": []
+        "src": "132:935:7"
       }
     ],
     "src": "32:1036:7"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.20+commit.a1b79de6.Emscripten.clang"
+    "version": "0.8.1+commit.df193b15.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-03-20T15:10:16.062Z",
+  "updatedAt": "2025-04-22T09:46:07.118Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -21,7 +21,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"node\",\"type\":\"bytes32\"}],\"name\":\"addr\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"@chainlink/contracts/src/v0.8/vendor/ENSResolver.sol\":\"ENSResolver\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@chainlink/contracts/src/v0.8/vendor/ENSResolver.sol\":{\"keccak256\":\"0x606bda5f3fa27be4cf04f6636dda443b7787b56e87ade988fca2e51d2147613d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://63b50d13ca97c4dd62738398bb2e423a36563b827b0af94c0e7a47cf0d4a2e6b\",\"dweb:/ipfs/QmXjy7BmtnPeCLMaMnGGnsxDPGxohfDpYzP8PnUoh6gBGa\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.1+commit.df193b15\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"node\",\"type\":\"bytes32\"}],\"name\":\"addr\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"@chainlink/contracts/src/v0.8/vendor/ENSResolver.sol\":\"ENSResolver\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@chainlink/contracts/src/v0.8/vendor/ENSResolver.sol\":{\"keccak256\":\"0x606bda5f3fa27be4cf04f6636dda443b7787b56e87ade988fca2e51d2147613d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://63b50d13ca97c4dd62738398bb2e423a36563b827b0af94c0e7a47cf0d4a2e6b\",\"dweb:/ipfs/QmXjy7BmtnPeCLMaMnGGnsxDPGxohfDpYzP8PnUoh6gBGa\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -35,15 +35,15 @@
     "absolutePath": "@chainlink/contracts/src/v0.8/vendor/ENSResolver.sol",
     "exportedSymbols": {
       "ENSResolver": [
-        2374
+        2373
       ]
     },
-    "id": 2375,
+    "id": 2374,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2366,
+        "id": 2365,
         "literals": [
           "solidity",
           "^",
@@ -56,39 +56,35 @@
       {
         "abstract": true,
         "baseContracts": [],
-        "canonicalName": "ENSResolver",
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": false,
-        "id": 2374,
+        "id": 2373,
         "linearizedBaseContracts": [
-          2374
+          2373
         ],
         "name": "ENSResolver",
-        "nameLocation": "75:11:13",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "functionSelector": "3b3b57de",
-            "id": 2373,
+            "id": 2372,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "addr",
-            "nameLocation": "100:4:13",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2369,
+              "id": 2368,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2368,
+                  "id": 2367,
                   "mutability": "mutable",
                   "name": "node",
-                  "nameLocation": "113:4:13",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2373,
+                  "scope": 2372,
                   "src": "105:12:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -97,7 +93,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 2367,
+                    "id": 2366,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "105:7:13",
@@ -112,17 +108,16 @@
               "src": "104:14:13"
             },
             "returnParameters": {
-              "id": 2372,
+              "id": 2371,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2371,
+                  "id": 2370,
                   "mutability": "mutable",
                   "name": "",
-                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2373,
+                  "scope": 2372,
                   "src": "148:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -131,7 +126,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2370,
+                    "id": 2369,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "148:7:13",
@@ -146,28 +141,26 @@
               ],
               "src": "147:9:13"
             },
-            "scope": 2374,
+            "scope": 2373,
             "src": "91:66:13",
             "stateMutability": "view",
             "virtual": true,
             "visibility": "public"
           }
         ],
-        "scope": 2375,
-        "src": "57:102:13",
-        "usedErrors": [],
-        "usedEvents": []
+        "scope": 2374,
+        "src": "57:102:13"
       }
     ],
     "src": "32:128:13"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.20+commit.a1b79de6.Emscripten.clang"
+    "version": "0.8.1+commit.df193b15.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-03-20T15:10:16.090Z",
+  "updatedAt": "2025-04-22T09:46:07.127Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

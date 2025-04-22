@@ -41,7 +41,7 @@
       "type": "event"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"id\",\"type\":\"bytes32\"}],\"name\":\"ChainlinkCancelled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"id\",\"type\":\"bytes32\"}],\"name\":\"ChainlinkFulfilled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"id\",\"type\":\"bytes32\"}],\"name\":\"ChainlinkRequested\",\"type\":\"event\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"title\":\"The ChainlinkClient contract\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"Contract writers can inherit this contract in order to create requests for the Chainlink network\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"@chainlink/contracts/src/v0.8/ChainlinkClient.sol\":\"ChainlinkClient\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@chainlink/contracts/src/v0.8/Chainlink.sol\":{\"keccak256\":\"0x3e133ddc69d0909fbe338c34b70cbf8dd262c70fd670b3632424c1858de25105\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6fbfa4cee3ce9fe3f5be6eda7e3304263d77b514be0bf5fadffa24d3f654ad2d\",\"dweb:/ipfs/QmTQmA4AJ9NookAyTg9DP6Mem6X8WSHJ5WjQJvqhE8K9qV\"]},\"@chainlink/contracts/src/v0.8/ChainlinkClient.sol\":{\"keccak256\":\"0xa221ccfa4763977cc78c57e3a83d47f5aaf7c15535a2c20dba5f46af80fb3bd7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba0f668a6f55a546ac1fe7fbf8539878a62811c1b0606fb4fadafb62f661e853\",\"dweb:/ipfs/QmTUmXvjWQno67W4CUdkVyTRAwSKWrko8EPjtizzavNVLJ\"]},\"@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol\":{\"keccak256\":\"0xa8adfbd0326c982c38ea3808a4da52f0a51807241787c4bd28235bbe86707c04\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://364e3be6190a68fbe84e4ede560af3ccede8d36e40e91378b4de042202c6e86a\",\"dweb:/ipfs/QmNpCP9j3FhBd1hDofg1uMCYiXBKNTU95n1Lxbnnj12oxw\"]},\"@chainlink/contracts/src/v0.8/interfaces/ENSInterface.sol\":{\"keccak256\":\"0xe51365458d82233a55f5ad4492a3b6bf56332d21cad6b0a5f21b8a026fcfd6d0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://40958fa820d41025822fe423111c74d5b8d0dfe1a30ae4fba4f6896a55fc2868\",\"dweb:/ipfs/QmbwYCM5k6h43T6qQV8DEpUxv5uErVSTCD6Fqm5DMLDgNi\"]},\"@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol\":{\"keccak256\":\"0xc7d7cd730d36825485ef4107d93c3ff18b9f3a5a00ea3d5988ba9a0bd70b10c5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8cb1064885ecbcd9c3adba779e190cb4a538e5d4d15aeccb67d3376bdffc94bd\",\"dweb:/ipfs/QmcQHK6ewve7tFi4XXK65JthQg4kQzApQikWcURJjGt4iQ\"]},\"@chainlink/contracts/src/v0.8/interfaces/OperatorInterface.sol\":{\"keccak256\":\"0x79a7c77b8f87be6ef02a566765077ed599724b060a209f34f8907eec5615da68\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b6ed9275abc614a37a13f86c148f3a4341d955a6b52a1a655357505e0926caab\",\"dweb:/ipfs/Qmaqgq3HiakdSBAe9NtGXYMxVFBjTkLbzyiiyjJUJ1g1M3\"]},\"@chainlink/contracts/src/v0.8/interfaces/OracleInterface.sol\":{\"keccak256\":\"0x3a86242e005bad9daf1b4794399a81ba373069355f38c8a07b58e57abc32513a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba8fbc2ccf2b3dfc8249306b7dc63624a4ec6f6ee43649d631f7363710c763b6\",\"dweb:/ipfs/QmePqh8R8EZMygYkawshsWArTrVA8VCdamLGV6ZZsVJgTz\"]},\"@chainlink/contracts/src/v0.8/interfaces/PointerInterface.sol\":{\"keccak256\":\"0x42e5d62984f9d57bab7e32b2c6e3af86f4feb232ea2af6c822032fae88203bd7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://12ec80973bbc95f59ce3a46aadd7761df6e4131bda14a01a265d76a8e007dd5d\",\"dweb:/ipfs/QmXwhsxjbkuXSHu6SX6tZxrQCXrdnJ4o2M7b3yFSgcWR1f\"]},\"@chainlink/contracts/src/v0.8/vendor/BufferChainlink.sol\":{\"keccak256\":\"0x89388a631c16ad993e4d76d8d19e08ae98e1397f5dfdfb5f9c0b91015df4cf5d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://88cb96caa94128821daec5478c0f3646902007b81a0604b2e3ab79ea2f40b056\",\"dweb:/ipfs/Qmd1nu9CpgouPmukNQpZThxKgPZAayXxqBfwbDVHfMrCrF\"]},\"@chainlink/contracts/src/v0.8/vendor/CBORChainlink.sol\":{\"keccak256\":\"0x08bda450d4dc1d17147fd29810234d35e2c437f1a99be733cfa7ee516db08a48\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d47a793b314afe9cd82fcf05ffe4ebbfa5504c2decc83004edbb3b2069d4f0c3\",\"dweb:/ipfs/Qmd2YLSiS8xeeXqireh6qJgTTwVY2VscZpv2cQBU8gkEJT\"]},\"@chainlink/contracts/src/v0.8/vendor/ENSResolver.sol\":{\"keccak256\":\"0x606bda5f3fa27be4cf04f6636dda443b7787b56e87ade988fca2e51d2147613d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://63b50d13ca97c4dd62738398bb2e423a36563b827b0af94c0e7a47cf0d4a2e6b\",\"dweb:/ipfs/QmXjy7BmtnPeCLMaMnGGnsxDPGxohfDpYzP8PnUoh6gBGa\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.1+commit.df193b15\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"id\",\"type\":\"bytes32\"}],\"name\":\"ChainlinkCancelled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"id\",\"type\":\"bytes32\"}],\"name\":\"ChainlinkFulfilled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"id\",\"type\":\"bytes32\"}],\"name\":\"ChainlinkRequested\",\"type\":\"event\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"title\":\"The ChainlinkClient contract\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"Contract writers can inherit this contract in order to create requests for the Chainlink network\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"@chainlink/contracts/src/v0.8/ChainlinkClient.sol\":\"ChainlinkClient\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@chainlink/contracts/src/v0.8/Chainlink.sol\":{\"keccak256\":\"0x3e133ddc69d0909fbe338c34b70cbf8dd262c70fd670b3632424c1858de25105\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6fbfa4cee3ce9fe3f5be6eda7e3304263d77b514be0bf5fadffa24d3f654ad2d\",\"dweb:/ipfs/QmTQmA4AJ9NookAyTg9DP6Mem6X8WSHJ5WjQJvqhE8K9qV\"]},\"@chainlink/contracts/src/v0.8/ChainlinkClient.sol\":{\"keccak256\":\"0xa221ccfa4763977cc78c57e3a83d47f5aaf7c15535a2c20dba5f46af80fb3bd7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba0f668a6f55a546ac1fe7fbf8539878a62811c1b0606fb4fadafb62f661e853\",\"dweb:/ipfs/QmTUmXvjWQno67W4CUdkVyTRAwSKWrko8EPjtizzavNVLJ\"]},\"@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol\":{\"keccak256\":\"0xa8adfbd0326c982c38ea3808a4da52f0a51807241787c4bd28235bbe86707c04\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://364e3be6190a68fbe84e4ede560af3ccede8d36e40e91378b4de042202c6e86a\",\"dweb:/ipfs/QmNpCP9j3FhBd1hDofg1uMCYiXBKNTU95n1Lxbnnj12oxw\"]},\"@chainlink/contracts/src/v0.8/interfaces/ENSInterface.sol\":{\"keccak256\":\"0xe51365458d82233a55f5ad4492a3b6bf56332d21cad6b0a5f21b8a026fcfd6d0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://40958fa820d41025822fe423111c74d5b8d0dfe1a30ae4fba4f6896a55fc2868\",\"dweb:/ipfs/QmbwYCM5k6h43T6qQV8DEpUxv5uErVSTCD6Fqm5DMLDgNi\"]},\"@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol\":{\"keccak256\":\"0xc7d7cd730d36825485ef4107d93c3ff18b9f3a5a00ea3d5988ba9a0bd70b10c5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8cb1064885ecbcd9c3adba779e190cb4a538e5d4d15aeccb67d3376bdffc94bd\",\"dweb:/ipfs/QmcQHK6ewve7tFi4XXK65JthQg4kQzApQikWcURJjGt4iQ\"]},\"@chainlink/contracts/src/v0.8/interfaces/OperatorInterface.sol\":{\"keccak256\":\"0x79a7c77b8f87be6ef02a566765077ed599724b060a209f34f8907eec5615da68\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b6ed9275abc614a37a13f86c148f3a4341d955a6b52a1a655357505e0926caab\",\"dweb:/ipfs/Qmaqgq3HiakdSBAe9NtGXYMxVFBjTkLbzyiiyjJUJ1g1M3\"]},\"@chainlink/contracts/src/v0.8/interfaces/OracleInterface.sol\":{\"keccak256\":\"0x3a86242e005bad9daf1b4794399a81ba373069355f38c8a07b58e57abc32513a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba8fbc2ccf2b3dfc8249306b7dc63624a4ec6f6ee43649d631f7363710c763b6\",\"dweb:/ipfs/QmePqh8R8EZMygYkawshsWArTrVA8VCdamLGV6ZZsVJgTz\"]},\"@chainlink/contracts/src/v0.8/interfaces/PointerInterface.sol\":{\"keccak256\":\"0x42e5d62984f9d57bab7e32b2c6e3af86f4feb232ea2af6c822032fae88203bd7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://12ec80973bbc95f59ce3a46aadd7761df6e4131bda14a01a265d76a8e007dd5d\",\"dweb:/ipfs/QmXwhsxjbkuXSHu6SX6tZxrQCXrdnJ4o2M7b3yFSgcWR1f\"]},\"@chainlink/contracts/src/v0.8/vendor/BufferChainlink.sol\":{\"keccak256\":\"0x89388a631c16ad993e4d76d8d19e08ae98e1397f5dfdfb5f9c0b91015df4cf5d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://88cb96caa94128821daec5478c0f3646902007b81a0604b2e3ab79ea2f40b056\",\"dweb:/ipfs/Qmd1nu9CpgouPmukNQpZThxKgPZAayXxqBfwbDVHfMrCrF\"]},\"@chainlink/contracts/src/v0.8/vendor/CBORChainlink.sol\":{\"keccak256\":\"0x08bda450d4dc1d17147fd29810234d35e2c437f1a99be733cfa7ee516db08a48\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d47a793b314afe9cd82fcf05ffe4ebbfa5504c2decc83004edbb3b2069d4f0c3\",\"dweb:/ipfs/Qmd2YLSiS8xeeXqireh6qJgTTwVY2VscZpv2cQBU8gkEJT\"]},\"@chainlink/contracts/src/v0.8/vendor/ENSResolver.sol\":{\"keccak256\":\"0x606bda5f3fa27be4cf04f6636dda443b7787b56e87ade988fca2e51d2147613d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://63b50d13ca97c4dd62738398bb2e423a36563b827b0af94c0e7a47cf0d4a2e6b\",\"dweb:/ipfs/QmXjy7BmtnPeCLMaMnGGnsxDPGxohfDpYzP8PnUoh6gBGa\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -55,10 +55,10 @@
     "absolutePath": "@chainlink/contracts/src/v0.8/ChainlinkClient.sol",
     "exportedSymbols": {
       "BufferChainlink": [
-        1917
+        1916
       ],
       "CBORChainlink": [
-        2364
+        2363
       ],
       "Chainlink": [
         268
@@ -73,7 +73,7 @@
         1156
       ],
       "ENSResolver_Chainlink": [
-        2374
+        2373
       ],
       "LinkTokenInterface": [
         1251
@@ -107,7 +107,6 @@
         "absolutePath": "@chainlink/contracts/src/v0.8/Chainlink.sol",
         "file": "./Chainlink.sol",
         "id": 271,
-        "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 862,
         "sourceUnit": 269,
@@ -119,7 +118,6 @@
         "absolutePath": "@chainlink/contracts/src/v0.8/interfaces/ENSInterface.sol",
         "file": "./interfaces/ENSInterface.sol",
         "id": 272,
-        "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 862,
         "sourceUnit": 1157,
@@ -131,7 +129,6 @@
         "absolutePath": "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol",
         "file": "./interfaces/LinkTokenInterface.sol",
         "id": 273,
-        "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 862,
         "sourceUnit": 1252,
@@ -143,7 +140,6 @@
         "absolutePath": "@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol",
         "file": "./interfaces/ChainlinkRequestInterface.sol",
         "id": 274,
-        "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 862,
         "sourceUnit": 1077,
@@ -155,7 +151,6 @@
         "absolutePath": "@chainlink/contracts/src/v0.8/interfaces/OperatorInterface.sol",
         "file": "./interfaces/OperatorInterface.sol",
         "id": 275,
-        "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 862,
         "sourceUnit": 1332,
@@ -167,7 +162,6 @@
         "absolutePath": "@chainlink/contracts/src/v0.8/interfaces/PointerInterface.sol",
         "file": "./interfaces/PointerInterface.sol",
         "id": 276,
-        "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 862,
         "sourceUnit": 1395,
@@ -179,10 +173,9 @@
         "absolutePath": "@chainlink/contracts/src/v0.8/vendor/ENSResolver.sol",
         "file": "./vendor/ENSResolver.sol",
         "id": 278,
-        "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 862,
-        "sourceUnit": 2375,
+        "sourceUnit": 2374,
         "src": "311:78:1",
         "symbolAliases": [
           {
@@ -191,12 +184,10 @@
               "name": "ENSResolver",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 2374,
               "src": "319:11:1",
               "typeDescriptions": {}
             },
-            "local": "ENSResolver_Chainlink",
-            "nameLocation": "-1:-1:-1"
+            "local": "ENSResolver_Chainlink"
           }
         ],
         "unitAlias": ""
@@ -204,7 +195,6 @@
       {
         "abstract": true,
         "baseContracts": [],
-        "canonicalName": "ChainlinkClient",
         "contractDependencies": [],
         "contractKind": "contract",
         "documentation": {
@@ -219,18 +209,13 @@
           861
         ],
         "name": "ChainlinkClient",
-        "nameLocation": "567:15:1",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "global": false,
             "id": 283,
             "libraryName": {
               "id": 280,
               "name": "Chainlink",
-              "nameLocations": [
-                "593:9:1"
-              ],
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 268,
               "src": "593:9:1"
@@ -243,10 +228,6 @@
               "pathNode": {
                 "id": 281,
                 "name": "Chainlink.Request",
-                "nameLocations": [
-                  "607:9:1",
-                  "617:7:1"
-                ],
                 "nodeType": "IdentifierPath",
                 "referencedDeclaration": 25,
                 "src": "607:17:1"
@@ -264,7 +245,6 @@
             "id": 288,
             "mutability": "constant",
             "name": "LINK_DIVISIBILITY",
-            "nameLocation": "655:17:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "629:52:1",
@@ -341,7 +321,6 @@
             "id": 291,
             "mutability": "constant",
             "name": "AMOUNT_OVERRIDE",
-            "nameLocation": "710:15:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "685:44:1",
@@ -384,7 +363,6 @@
             "id": 297,
             "mutability": "constant",
             "name": "SENDER_OVERRIDE",
-            "nameLocation": "758:15:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "733:53:1",
@@ -456,7 +434,6 @@
               "isPure": true,
               "kind": "typeConversion",
               "lValueRequested": false,
-              "nameLocations": [],
               "names": [],
               "nodeType": "FunctionCall",
               "src": "776:10:1",
@@ -473,7 +450,6 @@
             "id": 300,
             "mutability": "constant",
             "name": "ORACLE_ARGS_VERSION",
-            "nameLocation": "815:19:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "790:48:1",
@@ -516,7 +492,6 @@
             "id": 303,
             "mutability": "constant",
             "name": "OPERATOR_ARGS_VERSION",
-            "nameLocation": "867:21:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "842:50:1",
@@ -559,7 +534,6 @@
             "id": 308,
             "mutability": "constant",
             "name": "ENS_TOKEN_SUBNAME",
-            "nameLocation": "921:17:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "896:62:1",
@@ -622,7 +596,6 @@
               "isPure": true,
               "kind": "functionCall",
               "lValueRequested": false,
-              "nameLocations": [],
               "names": [],
               "nodeType": "FunctionCall",
               "src": "941:17:1",
@@ -639,7 +612,6 @@
             "id": 313,
             "mutability": "constant",
             "name": "ENS_ORACLE_SUBNAME",
-            "nameLocation": "987:18:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "962:65:1",
@@ -702,7 +674,6 @@
               "isPure": true,
               "kind": "functionCall",
               "lValueRequested": false,
-              "nameLocations": [],
               "names": [],
               "nodeType": "FunctionCall",
               "src": "1008:19:1",
@@ -719,7 +690,6 @@
             "id": 316,
             "mutability": "constant",
             "name": "LINK_TOKEN_POINTER",
-            "nameLocation": "1056:18:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "1031:88:1",
@@ -763,7 +733,6 @@
             "id": 319,
             "mutability": "mutable",
             "name": "s_ens",
-            "nameLocation": "1145:5:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "1124:26:1",
@@ -779,9 +748,6 @@
               "pathNode": {
                 "id": 317,
                 "name": "ENSInterface",
-                "nameLocations": [
-                  "1124:12:1"
-                ],
                 "nodeType": "IdentifierPath",
                 "referencedDeclaration": 1156,
                 "src": "1124:12:1"
@@ -800,7 +766,6 @@
             "id": 321,
             "mutability": "mutable",
             "name": "s_ensNode",
-            "nameLocation": "1170:9:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "1154:25:1",
@@ -827,7 +792,6 @@
             "id": 324,
             "mutability": "mutable",
             "name": "s_link",
-            "nameLocation": "1210:6:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "1183:33:1",
@@ -843,9 +807,6 @@
               "pathNode": {
                 "id": 322,
                 "name": "LinkTokenInterface",
-                "nameLocations": [
-                  "1183:18:1"
-                ],
                 "nodeType": "IdentifierPath",
                 "referencedDeclaration": 1251,
                 "src": "1183:18:1"
@@ -864,7 +825,6 @@
             "id": 327,
             "mutability": "mutable",
             "name": "s_oracle",
-            "nameLocation": "1246:8:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "1220:34:1",
@@ -880,9 +840,6 @@
               "pathNode": {
                 "id": 325,
                 "name": "OperatorInterface",
-                "nameLocations": [
-                  "1220:17:1"
-                ],
                 "nodeType": "IdentifierPath",
                 "referencedDeclaration": 1331,
                 "src": "1220:17:1"
@@ -901,7 +858,6 @@
             "id": 330,
             "mutability": "mutable",
             "name": "s_requestCount",
-            "nameLocation": "1274:14:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "1258:34:1",
@@ -944,7 +900,6 @@
             "id": 334,
             "mutability": "mutable",
             "name": "s_pendingRequests",
-            "nameLocation": "1332:17:1",
             "nodeType": "VariableDeclaration",
             "scope": 861,
             "src": "1296:53:1",
@@ -956,8 +911,6 @@
             },
             "typeName": {
               "id": 333,
-              "keyName": "",
-              "keyNameLocation": "-1:-1:-1",
               "keyType": {
                 "id": 331,
                 "name": "bytes32",
@@ -974,8 +927,6 @@
                 "typeIdentifier": "t_mapping$_t_bytes32_$_t_address_$",
                 "typeString": "mapping(bytes32 => address)"
               },
-              "valueName": "",
-              "valueNameLocation": "-1:-1:-1",
               "valueType": {
                 "id": 332,
                 "name": "address",
@@ -992,10 +943,8 @@
           },
           {
             "anonymous": false,
-            "eventSelector": "b5e6e01e79f91267dc17b4e6314d5d4d03593d2ceee0fbb452b750bd70ea5af9",
             "id": 338,
             "name": "ChainlinkRequested",
-            "nameLocation": "1360:18:1",
             "nodeType": "EventDefinition",
             "parameters": {
               "id": 337,
@@ -1007,7 +956,6 @@
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "id",
-                  "nameLocation": "1395:2:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 338,
                   "src": "1379:18:1",
@@ -1036,10 +984,8 @@
           },
           {
             "anonymous": false,
-            "eventSelector": "7cc135e0cebb02c3480ae5d74d377283180a2601f8f644edf7987b009316c63a",
             "id": 342,
             "name": "ChainlinkFulfilled",
-            "nameLocation": "1408:18:1",
             "nodeType": "EventDefinition",
             "parameters": {
               "id": 341,
@@ -1051,7 +997,6 @@
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "id",
-                  "nameLocation": "1443:2:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 342,
                   "src": "1427:18:1",
@@ -1080,10 +1025,8 @@
           },
           {
             "anonymous": false,
-            "eventSelector": "e1fe3afa0f7f761ff0a8b89086790efd5140d2907ebd5b7ff6bfcb5e075fd4c5",
             "id": 346,
             "name": "ChainlinkCancelled",
-            "nameLocation": "1456:18:1",
             "nodeType": "EventDefinition",
             "parameters": {
               "id": 345,
@@ -1095,7 +1038,6 @@
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "id",
-                  "nameLocation": "1491:2:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 346,
                   "src": "1475:18:1",
@@ -1138,7 +1080,6 @@
                       "id": 363,
                       "mutability": "mutable",
                       "name": "req",
-                      "nameLocation": "2049:3:1",
                       "nodeType": "VariableDeclaration",
                       "scope": 372,
                       "src": "2024:28:1",
@@ -1154,10 +1095,6 @@
                         "pathNode": {
                           "id": 361,
                           "name": "Chainlink.Request",
-                          "nameLocations": [
-                            "2024:9:1",
-                            "2034:7:1"
-                          ],
                           "nodeType": "IdentifierPath",
                           "referencedDeclaration": 25,
                           "src": "2024:17:1"
@@ -1248,13 +1185,12 @@
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
-                      "memberLocation": "2069:10:1",
                       "memberName": "initialize",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 70,
                       "src": "2065:14:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$_t_struct$_Request_$25_memory_ptr_$_t_bytes32_$_t_address_$_t_bytes4_$returns$_t_struct$_Request_$25_memory_ptr_$attached_to$_t_struct$_Request_$25_memory_ptr_$",
+                        "typeIdentifier": "t_function_internal_pure$_t_struct$_Request_$25_memory_ptr_$_t_bytes32_$_t_address_$_t_bytes4_$returns$_t_struct$_Request_$25_memory_ptr_$bound_to$_t_struct$_Request_$25_memory_ptr_$",
                         "typeString": "function (struct Chainlink.Request memory,bytes32,address,bytes4) pure returns (struct Chainlink.Request memory)"
                       }
                     },
@@ -1264,7 +1200,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "2065:63:1",
@@ -1292,7 +1227,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "buildChainlinkRequest",
-            "nameLocation": "1859:21:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 354,
@@ -1303,7 +1237,6 @@
                   "id": 349,
                   "mutability": "mutable",
                   "name": "specId",
-                  "nameLocation": "1894:6:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 373,
                   "src": "1886:14:1",
@@ -1330,7 +1263,6 @@
                   "id": 351,
                   "mutability": "mutable",
                   "name": "callbackAddr",
-                  "nameLocation": "1914:12:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 373,
                   "src": "1906:20:1",
@@ -1358,7 +1290,6 @@
                   "id": 353,
                   "mutability": "mutable",
                   "name": "callbackFunctionSignature",
-                  "nameLocation": "1939:25:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 373,
                   "src": "1932:32:1",
@@ -1392,7 +1323,6 @@
                   "id": 357,
                   "mutability": "mutable",
                   "name": "",
-                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 373,
                   "src": "1992:24:1",
@@ -1408,10 +1338,6 @@
                     "pathNode": {
                       "id": 355,
                       "name": "Chainlink.Request",
-                      "nameLocations": [
-                        "1992:9:1",
-                        "2002:7:1"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25,
                       "src": "1992:17:1"
@@ -1450,7 +1376,6 @@
                       "id": 388,
                       "mutability": "mutable",
                       "name": "req",
-                      "nameLocation": "2602:3:1",
                       "nodeType": "VariableDeclaration",
                       "scope": 400,
                       "src": "2577:28:1",
@@ -1466,10 +1391,6 @@
                         "pathNode": {
                           "id": 386,
                           "name": "Chainlink.Request",
-                          "nameLocations": [
-                            "2577:9:1",
-                            "2587:7:1"
-                          ],
                           "nodeType": "IdentifierPath",
                           "referencedDeclaration": 25,
                           "src": "2577:17:1"
@@ -1550,7 +1471,6 @@
                         "isPure": false,
                         "kind": "typeConversion",
                         "lValueRequested": false,
-                        "nameLocations": [],
                         "names": [],
                         "nodeType": "FunctionCall",
                         "src": "2641:13:1",
@@ -1605,13 +1525,12 @@
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
-                      "memberLocation": "2622:10:1",
                       "memberName": "initialize",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 70,
                       "src": "2618:14:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$_t_struct$_Request_$25_memory_ptr_$_t_bytes32_$_t_address_$_t_bytes4_$returns$_t_struct$_Request_$25_memory_ptr_$attached_to$_t_struct$_Request_$25_memory_ptr_$",
+                        "typeIdentifier": "t_function_internal_pure$_t_struct$_Request_$25_memory_ptr_$_t_bytes32_$_t_address_$_t_bytes4_$returns$_t_struct$_Request_$25_memory_ptr_$bound_to$_t_struct$_Request_$25_memory_ptr_$",
                         "typeString": "function (struct Chainlink.Request memory,bytes32,address,bytes4) pure returns (struct Chainlink.Request memory)"
                       }
                     },
@@ -1621,7 +1540,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "2618:64:1",
@@ -1649,7 +1567,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "buildOperatorRequest",
-            "nameLocation": "2437:20:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 379,
@@ -1660,7 +1577,6 @@
                   "id": 376,
                   "mutability": "mutable",
                   "name": "specId",
-                  "nameLocation": "2466:6:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 401,
                   "src": "2458:14:1",
@@ -1687,7 +1603,6 @@
                   "id": 378,
                   "mutability": "mutable",
                   "name": "callbackFunctionSignature",
-                  "nameLocation": "2481:25:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 401,
                   "src": "2474:32:1",
@@ -1721,7 +1636,6 @@
                   "id": 382,
                   "mutability": "mutable",
                   "name": "",
-                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 401,
                   "src": "2543:24:1",
@@ -1737,10 +1651,6 @@
                     "pathNode": {
                       "id": 380,
                       "name": "Chainlink.Request",
-                      "nameLocations": [
-                        "2543:9:1",
-                        "2553:7:1"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25,
                       "src": "2543:17:1"
@@ -1819,7 +1729,6 @@
                         "isPure": false,
                         "kind": "typeConversion",
                         "lValueRequested": false,
-                        "nameLocations": [],
                         "names": [],
                         "nodeType": "FunctionCall",
                         "src": "3132:17:1",
@@ -1886,7 +1795,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "3109:55:1",
@@ -1914,7 +1822,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "sendChainlinkRequest",
-            "nameLocation": "3001:20:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 408,
@@ -1925,7 +1832,6 @@
                   "id": 405,
                   "mutability": "mutable",
                   "name": "req",
-                  "nameLocation": "3047:3:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 422,
                   "src": "3022:28:1",
@@ -1941,10 +1847,6 @@
                     "pathNode": {
                       "id": 403,
                       "name": "Chainlink.Request",
-                      "nameLocations": [
-                        "3022:9:1",
-                        "3032:7:1"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25,
                       "src": "3022:17:1"
@@ -1963,7 +1865,6 @@
                   "id": 407,
                   "mutability": "mutable",
                   "name": "payment",
-                  "nameLocation": "3060:7:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 422,
                   "src": "3052:15:1",
@@ -1997,7 +1898,6 @@
                   "id": 410,
                   "mutability": "mutable",
                   "name": "",
-                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 422,
                   "src": "3087:7:1",
@@ -2044,7 +1944,6 @@
                       "id": 436,
                       "mutability": "mutable",
                       "name": "nonce",
-                      "nameLocation": "3856:5:1",
                       "nodeType": "VariableDeclaration",
                       "scope": 476,
                       "src": "3848:13:1",
@@ -2170,7 +2069,6 @@
                       "id": 446,
                       "mutability": "mutable",
                       "name": "encodedRequest",
-                      "nameLocation": "3929:14:1",
                       "nodeType": "VariableDeclaration",
                       "scope": 476,
                       "src": "3916:27:1",
@@ -2215,7 +2113,6 @@
                           "isLValue": false,
                           "isPure": true,
                           "lValueRequested": false,
-                          "memberLocation": "4002:13:1",
                           "memberName": "oracleRequest",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 1064,
@@ -2230,7 +2127,6 @@
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
-                        "memberLocation": "4016:8:1",
                         "memberName": "selector",
                         "nodeType": "MemberAccess",
                         "src": "3976:48:1",
@@ -2281,7 +2177,6 @@
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
-                        "memberLocation": "4249:2:1",
                         "memberName": "id",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": 15,
@@ -2338,7 +2233,6 @@
                         "isPure": false,
                         "kind": "typeConversion",
                         "lValueRequested": false,
-                        "nameLocations": [],
                         "names": [],
                         "nodeType": "FunctionCall",
                         "src": "4259:13:1",
@@ -2366,7 +2260,6 @@
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
-                        "memberLocation": "4284:18:1",
                         "memberName": "callbackFunctionId",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": 19,
@@ -2419,13 +2312,12 @@
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
-                          "memberLocation": "4354:3:1",
                           "memberName": "buf",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 24,
                           "src": "4350:7:1",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_buffer_$1403_memory_ptr",
+                            "typeIdentifier": "t_struct$_buffer_$1402_memory_ptr",
                             "typeString": "struct BufferChainlink.buffer memory"
                           }
                         },
@@ -2434,10 +2326,9 @@
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
-                        "memberLocation": "4358:3:1",
                         "memberName": "buf",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1400,
+                        "referencedDeclaration": 1399,
                         "src": "4350:11:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_memory_ptr",
@@ -2501,7 +2392,6 @@
                       "isLValue": false,
                       "isPure": true,
                       "lValueRequested": false,
-                      "memberLocation": "3950:18:1",
                       "memberName": "encodeWithSelector",
                       "nodeType": "MemberAccess",
                       "src": "3946:22:1",
@@ -2516,7 +2406,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "3946:421:1",
@@ -2617,7 +2506,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "4380:58:1",
@@ -2645,7 +2533,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "sendChainlinkRequestTo",
-            "nameLocation": "3696:22:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 431,
@@ -2656,7 +2543,6 @@
                   "id": 425,
                   "mutability": "mutable",
                   "name": "oracleAddress",
-                  "nameLocation": "3732:13:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 477,
                   "src": "3724:21:1",
@@ -2684,7 +2570,6 @@
                   "id": 428,
                   "mutability": "mutable",
                   "name": "req",
-                  "nameLocation": "3776:3:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 477,
                   "src": "3751:28:1",
@@ -2700,10 +2585,6 @@
                     "pathNode": {
                       "id": 426,
                       "name": "Chainlink.Request",
-                      "nameLocations": [
-                        "3751:9:1",
-                        "3761:7:1"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25,
                       "src": "3751:17:1"
@@ -2722,7 +2603,6 @@
                   "id": 430,
                   "mutability": "mutable",
                   "name": "payment",
-                  "nameLocation": "3793:7:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 477,
                   "src": "3785:15:1",
@@ -2756,7 +2636,6 @@
                   "id": 433,
                   "mutability": "mutable",
                   "name": "requestId",
-                  "nameLocation": "3831:9:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 477,
                   "src": "3823:17:1",
@@ -2843,7 +2722,6 @@
                         "isPure": false,
                         "kind": "typeConversion",
                         "lValueRequested": false,
-                        "nameLocations": [],
                         "names": [],
                         "nodeType": "FunctionCall",
                         "src": "4942:17:1",
@@ -2910,7 +2788,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "4920:54:1",
@@ -2938,7 +2815,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "sendOperatorRequest",
-            "nameLocation": "4813:19:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 484,
@@ -2949,7 +2825,6 @@
                   "id": 481,
                   "mutability": "mutable",
                   "name": "req",
-                  "nameLocation": "4858:3:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 498,
                   "src": "4833:28:1",
@@ -2965,10 +2840,6 @@
                     "pathNode": {
                       "id": 479,
                       "name": "Chainlink.Request",
-                      "nameLocations": [
-                        "4833:9:1",
-                        "4843:7:1"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25,
                       "src": "4833:17:1"
@@ -2987,7 +2858,6 @@
                   "id": 483,
                   "mutability": "mutable",
                   "name": "payment",
-                  "nameLocation": "4871:7:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 498,
                   "src": "4863:15:1",
@@ -3021,7 +2891,6 @@
                   "id": 486,
                   "mutability": "mutable",
                   "name": "",
-                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 498,
                   "src": "4898:7:1",
@@ -3068,7 +2937,6 @@
                       "id": 512,
                       "mutability": "mutable",
                       "name": "nonce",
-                      "nameLocation": "5718:5:1",
                       "nodeType": "VariableDeclaration",
                       "scope": 548,
                       "src": "5710:13:1",
@@ -3194,7 +3062,6 @@
                       "id": 522,
                       "mutability": "mutable",
                       "name": "encodedRequest",
-                      "nameLocation": "5791:14:1",
                       "nodeType": "VariableDeclaration",
                       "scope": 548,
                       "src": "5778:27:1",
@@ -3239,7 +3106,6 @@
                           "isLValue": false,
                           "isPure": true,
                           "lValueRequested": false,
-                          "memberLocation": "5856:15:1",
                           "memberName": "operatorRequest",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 1276,
@@ -3254,7 +3120,6 @@
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
-                        "memberLocation": "5872:8:1",
                         "memberName": "selector",
                         "nodeType": "MemberAccess",
                         "src": "5838:42:1",
@@ -3305,7 +3170,6 @@
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
-                        "memberLocation": "6105:2:1",
                         "memberName": "id",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": 15,
@@ -3333,7 +3197,6 @@
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
-                        "memberLocation": "6119:18:1",
                         "memberName": "callbackFunctionId",
                         "nodeType": "MemberAccess",
                         "referencedDeclaration": 19,
@@ -3386,13 +3249,12 @@
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
-                          "memberLocation": "6191:3:1",
                           "memberName": "buf",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 24,
                           "src": "6187:7:1",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_buffer_$1403_memory_ptr",
+                            "typeIdentifier": "t_struct$_buffer_$1402_memory_ptr",
                             "typeString": "struct BufferChainlink.buffer memory"
                           }
                         },
@@ -3401,10 +3263,9 @@
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
-                        "memberLocation": "6195:3:1",
                         "memberName": "buf",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1400,
+                        "referencedDeclaration": 1399,
                         "src": "6187:11:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_memory_ptr",
@@ -3464,7 +3325,6 @@
                       "isLValue": false,
                       "isPure": true,
                       "lValueRequested": false,
-                      "memberLocation": "5812:18:1",
                       "memberName": "encodeWithSelector",
                       "nodeType": "MemberAccess",
                       "src": "5808:22:1",
@@ -3479,7 +3339,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "5808:396:1",
@@ -3580,7 +3439,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "6217:58:1",
@@ -3608,7 +3466,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "sendOperatorRequestTo",
-            "nameLocation": "5559:21:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 507,
@@ -3619,7 +3476,6 @@
                   "id": 501,
                   "mutability": "mutable",
                   "name": "oracleAddress",
-                  "nameLocation": "5594:13:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 549,
                   "src": "5586:21:1",
@@ -3647,7 +3503,6 @@
                   "id": 504,
                   "mutability": "mutable",
                   "name": "req",
-                  "nameLocation": "5638:3:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 549,
                   "src": "5613:28:1",
@@ -3663,10 +3518,6 @@
                     "pathNode": {
                       "id": 502,
                       "name": "Chainlink.Request",
-                      "nameLocations": [
-                        "5613:9:1",
-                        "5623:7:1"
-                      ],
                       "nodeType": "IdentifierPath",
                       "referencedDeclaration": 25,
                       "src": "5613:17:1"
@@ -3685,7 +3536,6 @@
                   "id": 506,
                   "mutability": "mutable",
                   "name": "payment",
-                  "nameLocation": "5655:7:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 549,
                   "src": "5647:15:1",
@@ -3719,7 +3569,6 @@
                   "id": 509,
                   "mutability": "mutable",
                   "name": "requestId",
-                  "nameLocation": "5693:9:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 549,
                   "src": "5685:17:1",
@@ -3834,7 +3683,6 @@
                             "isLValue": false,
                             "isPure": true,
                             "lValueRequested": false,
-                            "memberLocation": "6822:12:1",
                             "memberName": "encodePacked",
                             "nodeType": "MemberAccess",
                             "src": "6818:16:1",
@@ -3849,7 +3697,6 @@
                           "isPure": false,
                           "kind": "functionCall",
                           "lValueRequested": false,
-                          "nameLocations": [],
                           "names": [],
                           "nodeType": "FunctionCall",
                           "src": "6818:29:1",
@@ -3884,7 +3731,6 @@
                       "isPure": false,
                       "kind": "functionCall",
                       "lValueRequested": false,
-                      "nameLocations": [],
                       "names": [],
                       "nodeType": "FunctionCall",
                       "src": "6808:40:1",
@@ -4012,7 +3858,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "6909:29:1",
@@ -4100,7 +3945,6 @@
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
-                          "memberLocation": "6959:15:1",
                           "memberName": "transferAndCall",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 1239,
@@ -4116,7 +3960,6 @@
                         "isPure": false,
                         "kind": "functionCall",
                         "lValueRequested": false,
-                        "nameLocations": [],
                         "names": [],
                         "nodeType": "FunctionCall",
                         "src": "6952:62:1",
@@ -4174,7 +4017,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "6944:110:1",
@@ -4201,7 +4043,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "_rawRequest",
-            "nameLocation": "6638:11:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 559,
@@ -4212,7 +4053,6 @@
                   "id": 552,
                   "mutability": "mutable",
                   "name": "oracleAddress",
-                  "nameLocation": "6663:13:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 594,
                   "src": "6655:21:1",
@@ -4240,7 +4080,6 @@
                   "id": 554,
                   "mutability": "mutable",
                   "name": "nonce",
-                  "nameLocation": "6690:5:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 594,
                   "src": "6682:13:1",
@@ -4267,7 +4106,6 @@
                   "id": 556,
                   "mutability": "mutable",
                   "name": "payment",
-                  "nameLocation": "6709:7:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 594,
                   "src": "6701:15:1",
@@ -4294,7 +4132,6 @@
                   "id": 558,
                   "mutability": "mutable",
                   "name": "encodedRequest",
-                  "nameLocation": "6735:14:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 594,
                   "src": "6722:27:1",
@@ -4328,7 +4165,6 @@
                   "id": 561,
                   "mutability": "mutable",
                   "name": "requestId",
-                  "nameLocation": "6779:9:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 594,
                   "src": "6771:17:1",
@@ -4375,7 +4211,6 @@
                       "id": 608,
                       "mutability": "mutable",
                       "name": "requested",
-                      "nameLocation": "7737:9:1",
                       "nodeType": "VariableDeclaration",
                       "scope": 633,
                       "src": "7719:27:1",
@@ -4391,9 +4226,6 @@
                         "pathNode": {
                           "id": 606,
                           "name": "OperatorInterface",
-                          "nameLocations": [
-                            "7719:17:1"
-                          ],
                           "nodeType": "IdentifierPath",
                           "referencedDeclaration": 1331,
                           "src": "7719:17:1"
@@ -4473,7 +4305,6 @@
                     "isPure": false,
                     "kind": "typeConversion",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "7749:47:1",
@@ -4583,7 +4414,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "7848:29:1",
@@ -4685,7 +4515,6 @@
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
-                      "memberLocation": "7893:19:1",
                       "memberName": "cancelOracleRequest",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 1075,
@@ -4701,7 +4530,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "7883:75:1",
@@ -4728,7 +4556,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "cancelChainlinkRequest",
-            "nameLocation": "7584:22:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 604,
@@ -4739,7 +4566,6 @@
                   "id": 597,
                   "mutability": "mutable",
                   "name": "requestId",
-                  "nameLocation": "7620:9:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 634,
                   "src": "7612:17:1",
@@ -4766,7 +4592,6 @@
                   "id": 599,
                   "mutability": "mutable",
                   "name": "payment",
-                  "nameLocation": "7643:7:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 634,
                   "src": "7635:15:1",
@@ -4793,7 +4618,6 @@
                   "id": 601,
                   "mutability": "mutable",
                   "name": "callbackFunc",
-                  "nameLocation": "7663:12:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 634,
                   "src": "7656:19:1",
@@ -4820,7 +4644,6 @@
                   "id": 603,
                   "mutability": "mutable",
                   "name": "expiration",
-                  "nameLocation": "7689:10:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 634,
                   "src": "7681:18:1",
@@ -4894,7 +4717,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "getNextRequestCount",
-            "nameLocation": "8184:19:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 636,
@@ -4911,7 +4733,6 @@
                   "id": 638,
                   "mutability": "mutable",
                   "name": "",
-                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 643,
                   "src": "8229:7:1",
@@ -5008,7 +4829,6 @@
                       "isPure": false,
                       "kind": "typeConversion",
                       "lValueRequested": false,
-                      "nameLocations": [],
                       "names": [],
                       "nodeType": "FunctionCall",
                       "src": "8468:32:1",
@@ -5041,7 +4861,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "setChainlinkOracle",
-            "nameLocation": "8400:18:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 647,
@@ -5052,7 +4871,6 @@
                   "id": 646,
                   "mutability": "mutable",
                   "name": "oracleAddress",
-                  "nameLocation": "8427:13:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 656,
                   "src": "8419:21:1",
@@ -5156,7 +4974,6 @@
                       "isPure": false,
                       "kind": "typeConversion",
                       "lValueRequested": false,
-                      "nameLocations": [],
                       "names": [],
                       "nodeType": "FunctionCall",
                       "src": "8697:31:1",
@@ -5189,7 +5006,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "setChainlinkToken",
-            "nameLocation": "8634:17:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 660,
@@ -5200,7 +5016,6 @@
                   "id": 659,
                   "mutability": "mutable",
                   "name": "linkAddress",
-                  "nameLocation": "8660:11:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 669,
                   "src": "8652:19:1",
@@ -5290,7 +5105,6 @@
                             "isPure": true,
                             "kind": "typeConversion",
                             "lValueRequested": false,
-                            "nameLocations": [],
                             "names": [],
                             "nodeType": "FunctionCall",
                             "src": "8924:36:1",
@@ -5305,7 +5119,6 @@
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
-                          "memberLocation": "8961:10:1",
                           "memberName": "getAddress",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 1393,
@@ -5321,7 +5134,6 @@
                         "isPure": false,
                         "kind": "functionCall",
                         "lValueRequested": false,
-                        "nameLocations": [],
                         "names": [],
                         "nodeType": "FunctionCall",
                         "src": "8924:49:1",
@@ -5356,7 +5168,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "8906:68:1",
@@ -5383,7 +5194,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "setPublicChainlinkToken",
-            "nameLocation": "8865:23:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 671,
@@ -5457,7 +5267,6 @@
                     "isPure": false,
                     "kind": "typeConversion",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "9176:15:1",
@@ -5485,7 +5294,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "chainlinkTokenAddress",
-            "nameLocation": "9107:21:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 684,
@@ -5502,7 +5310,6 @@
                   "id": 686,
                   "mutability": "mutable",
                   "name": "",
-                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 694,
                   "src": "9154:7:1",
@@ -5588,7 +5395,6 @@
                     "isPure": false,
                     "kind": "typeConversion",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "9404:17:1",
@@ -5616,7 +5422,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "chainlinkOracleAddress",
-            "nameLocation": "9334:22:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 696,
@@ -5633,7 +5438,6 @@
                   "id": 698,
                   "mutability": "mutable",
                   "name": "",
-                  "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
                   "scope": 706,
                   "src": "9382:7:1",
@@ -5767,13 +5571,9 @@
                   }
                 ],
                 "id": 715,
-                "kind": "modifierInvocation",
                 "modifierName": {
                   "id": 713,
                   "name": "notPendingRequest",
-                  "nameLocations": [
-                    "9790:17:1"
-                  ],
                   "nodeType": "IdentifierPath",
                   "referencedDeclaration": 860,
                   "src": "9790:17:1"
@@ -5783,7 +5583,6 @@
               }
             ],
             "name": "addChainlinkExternalRequest",
-            "nameLocation": "9711:27:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 712,
@@ -5794,7 +5593,6 @@
                   "id": 709,
                   "mutability": "mutable",
                   "name": "oracleAddress",
-                  "nameLocation": "9747:13:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 724,
                   "src": "9739:21:1",
@@ -5822,7 +5620,6 @@
                   "id": 711,
                   "mutability": "mutable",
                   "name": "requestId",
-                  "nameLocation": "9770:9:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 724,
                   "src": "9762:17:1",
@@ -5925,7 +5722,6 @@
                       "isPure": false,
                       "kind": "typeConversion",
                       "lValueRequested": false,
-                      "nameLocations": [],
                       "names": [],
                       "nodeType": "FunctionCall",
                       "src": "10221:24:1",
@@ -5998,7 +5794,6 @@
                       "id": 743,
                       "mutability": "mutable",
                       "name": "linkSubnode",
-                      "nameLocation": "10281:11:1",
                       "nodeType": "VariableDeclaration",
                       "scope": 772,
                       "src": "10273:19:1",
@@ -6079,7 +5874,6 @@
                           "isLValue": false,
                           "isPure": true,
                           "lValueRequested": false,
-                          "memberLocation": "10309:12:1",
                           "memberName": "encodePacked",
                           "nodeType": "MemberAccess",
                           "src": "10305:16:1",
@@ -6094,7 +5888,6 @@
                         "isPure": false,
                         "kind": "functionCall",
                         "lValueRequested": false,
-                        "nameLocations": [],
                         "names": [],
                         "nodeType": "FunctionCall",
                         "src": "10305:46:1",
@@ -6129,7 +5922,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "10295:57:1",
@@ -6152,14 +5944,13 @@
                       "id": 754,
                       "mutability": "mutable",
                       "name": "resolver",
-                      "nameLocation": "10380:8:1",
                       "nodeType": "VariableDeclaration",
                       "scope": 772,
                       "src": "10358:30:1",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_ENSResolver_$2374",
+                        "typeIdentifier": "t_contract$_ENSResolver_$2373",
                         "typeString": "contract ENSResolver"
                       },
                       "typeName": {
@@ -6168,17 +5959,14 @@
                         "pathNode": {
                           "id": 752,
                           "name": "ENSResolver_Chainlink",
-                          "nameLocations": [
-                            "10358:21:1"
-                          ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 2374,
+                          "referencedDeclaration": 2373,
                           "src": "10358:21:1"
                         },
-                        "referencedDeclaration": 2374,
+                        "referencedDeclaration": 2373,
                         "src": "10358:21:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_ENSResolver_$2374",
+                          "typeIdentifier": "t_contract$_ENSResolver_$2373",
                           "typeString": "contract ENSResolver"
                         }
                       },
@@ -6227,7 +6015,6 @@
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
-                          "memberLocation": "10419:8:1",
                           "memberName": "resolver",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 1148,
@@ -6243,7 +6030,6 @@
                         "isPure": false,
                         "kind": "functionCall",
                         "lValueRequested": false,
-                        "nameLocations": [],
                         "names": [],
                         "nodeType": "FunctionCall",
                         "src": "10413:27:1",
@@ -6265,10 +6051,10 @@
                       "name": "ENSResolver_Chainlink",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2374,
+                      "referencedDeclaration": 2373,
                       "src": "10391:21:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_ENSResolver_$2374_$",
+                        "typeIdentifier": "t_type$_t_contract$_ENSResolver_$2373_$",
                         "typeString": "type(contract ENSResolver)"
                       }
                     },
@@ -6278,13 +6064,12 @@
                     "isPure": false,
                     "kind": "typeConversion",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "10391:50:1",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_ENSResolver_$2374",
+                      "typeIdentifier": "t_contract$_ENSResolver_$2373",
                       "typeString": "contract ENSResolver"
                     }
                   },
@@ -6324,7 +6109,7 @@
                             "referencedDeclaration": 754,
                             "src": "10465:8:1",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_contract$_ENSResolver_$2374",
+                              "typeIdentifier": "t_contract$_ENSResolver_$2373",
                               "typeString": "contract ENSResolver"
                             }
                           },
@@ -6333,10 +6118,9 @@
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
-                          "memberLocation": "10474:4:1",
                           "memberName": "addr",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 2373,
+                          "referencedDeclaration": 2372,
                           "src": "10465:13:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_external_view$_t_bytes32_$returns$_t_address_$",
@@ -6349,7 +6133,6 @@
                         "isPure": false,
                         "kind": "functionCall",
                         "lValueRequested": false,
-                        "nameLocations": [],
                         "names": [],
                         "nodeType": "FunctionCall",
                         "src": "10465:26:1",
@@ -6384,7 +6167,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "10447:45:1",
@@ -6420,7 +6202,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "10498:30:1",
@@ -6447,7 +6228,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "useChainlinkWithENS",
-            "nameLocation": "10144:19:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 730,
@@ -6458,7 +6238,6 @@
                   "id": 727,
                   "mutability": "mutable",
                   "name": "ensAddress",
-                  "nameLocation": "10172:10:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 773,
                   "src": "10164:18:1",
@@ -6486,7 +6265,6 @@
                   "id": 729,
                   "mutability": "mutable",
                   "name": "node",
-                  "nameLocation": "10192:4:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 773,
                   "src": "10184:12:1",
@@ -6539,7 +6317,6 @@
                       "id": 778,
                       "mutability": "mutable",
                       "name": "oracleSubnode",
-                      "nameLocation": "10790:13:1",
                       "nodeType": "VariableDeclaration",
                       "scope": 804,
                       "src": "10782:21:1",
@@ -6620,7 +6397,6 @@
                           "isLValue": false,
                           "isPure": true,
                           "lValueRequested": false,
-                          "memberLocation": "10820:12:1",
                           "memberName": "encodePacked",
                           "nodeType": "MemberAccess",
                           "src": "10816:16:1",
@@ -6635,7 +6411,6 @@
                         "isPure": false,
                         "kind": "functionCall",
                         "lValueRequested": false,
-                        "nameLocations": [],
                         "names": [],
                         "nodeType": "FunctionCall",
                         "src": "10816:47:1",
@@ -6670,7 +6445,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "10806:58:1",
@@ -6693,14 +6467,13 @@
                       "id": 789,
                       "mutability": "mutable",
                       "name": "resolver",
-                      "nameLocation": "10892:8:1",
                       "nodeType": "VariableDeclaration",
                       "scope": 804,
                       "src": "10870:30:1",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_ENSResolver_$2374",
+                        "typeIdentifier": "t_contract$_ENSResolver_$2373",
                         "typeString": "contract ENSResolver"
                       },
                       "typeName": {
@@ -6709,17 +6482,14 @@
                         "pathNode": {
                           "id": 787,
                           "name": "ENSResolver_Chainlink",
-                          "nameLocations": [
-                            "10870:21:1"
-                          ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 2374,
+                          "referencedDeclaration": 2373,
                           "src": "10870:21:1"
                         },
-                        "referencedDeclaration": 2374,
+                        "referencedDeclaration": 2373,
                         "src": "10870:21:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_ENSResolver_$2374",
+                          "typeIdentifier": "t_contract$_ENSResolver_$2373",
                           "typeString": "contract ENSResolver"
                         }
                       },
@@ -6768,7 +6538,6 @@
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
-                          "memberLocation": "10931:8:1",
                           "memberName": "resolver",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 1148,
@@ -6784,7 +6553,6 @@
                         "isPure": false,
                         "kind": "functionCall",
                         "lValueRequested": false,
-                        "nameLocations": [],
                         "names": [],
                         "nodeType": "FunctionCall",
                         "src": "10925:29:1",
@@ -6806,10 +6574,10 @@
                       "name": "ENSResolver_Chainlink",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2374,
+                      "referencedDeclaration": 2373,
                       "src": "10903:21:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_ENSResolver_$2374_$",
+                        "typeIdentifier": "t_type$_t_contract$_ENSResolver_$2373_$",
                         "typeString": "type(contract ENSResolver)"
                       }
                     },
@@ -6819,13 +6587,12 @@
                     "isPure": false,
                     "kind": "typeConversion",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "10903:52:1",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_ENSResolver_$2374",
+                      "typeIdentifier": "t_contract$_ENSResolver_$2373",
                       "typeString": "contract ENSResolver"
                     }
                   },
@@ -6865,7 +6632,7 @@
                             "referencedDeclaration": 789,
                             "src": "10980:8:1",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_contract$_ENSResolver_$2374",
+                              "typeIdentifier": "t_contract$_ENSResolver_$2373",
                               "typeString": "contract ENSResolver"
                             }
                           },
@@ -6874,10 +6641,9 @@
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
-                          "memberLocation": "10989:4:1",
                           "memberName": "addr",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 2373,
+                          "referencedDeclaration": 2372,
                           "src": "10980:13:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_external_view$_t_bytes32_$returns$_t_address_$",
@@ -6890,7 +6656,6 @@
                         "isPure": false,
                         "kind": "functionCall",
                         "lValueRequested": false,
-                        "nameLocations": [],
                         "names": [],
                         "nodeType": "FunctionCall",
                         "src": "10980:28:1",
@@ -6925,7 +6690,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "10961:48:1",
@@ -6952,7 +6716,6 @@
             "kind": "function",
             "modifiers": [],
             "name": "updateChainlinkOracleWithENS",
-            "nameLocation": "10736:28:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 775,
@@ -7005,13 +6768,9 @@
                   }
                 ],
                 "id": 812,
-                "kind": "modifierInvocation",
                 "modifierName": {
                   "id": 810,
                   "name": "recordChainlinkFulfillment",
-                  "nameLocations": [
-                    "11315:26:1"
-                  ],
                   "nodeType": "IdentifierPath",
                   "referencedDeclaration": 841,
                   "src": "11315:26:1"
@@ -7021,7 +6780,6 @@
               }
             ],
             "name": "validateChainlinkCallback",
-            "nameLocation": "11253:25:1",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 809,
@@ -7032,7 +6790,6 @@
                   "id": 808,
                   "mutability": "mutable",
                   "name": "requestId",
-                  "nameLocation": "11287:9:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 815,
                   "src": "11279:17:1",
@@ -7106,7 +6863,6 @@
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
-                          "memberLocation": "11653:6:1",
                           "memberName": "sender",
                           "nodeType": "MemberAccess",
                           "src": "11649:10:1",
@@ -7208,7 +6964,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "11641:95:1",
@@ -7319,7 +7074,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "11788:29:1",
@@ -7348,7 +7102,6 @@
             },
             "id": 841,
             "name": "recordChainlinkFulfillment",
-            "nameLocation": "11589:26:1",
             "nodeType": "ModifierDefinition",
             "parameters": {
               "id": 819,
@@ -7359,7 +7112,6 @@
                   "id": 818,
                   "mutability": "mutable",
                   "name": "requestId",
-                  "nameLocation": "11624:9:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 841,
                   "src": "11616:17:1",
@@ -7497,7 +7249,6 @@
                           "isPure": true,
                           "kind": "typeConversion",
                           "lValueRequested": false,
-                          "nameLocations": [],
                           "names": [],
                           "nodeType": "FunctionCall",
                           "src": "12042:10:1",
@@ -7561,7 +7312,6 @@
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
-                    "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
                     "src": "12002:81:1",
@@ -7590,7 +7340,6 @@
             },
             "id": 860,
             "name": "notPendingRequest",
-            "nameLocation": "11959:17:1",
             "nodeType": "ModifierDefinition",
             "parameters": {
               "id": 845,
@@ -7601,7 +7350,6 @@
                   "id": 844,
                   "mutability": "mutable",
                   "name": "requestId",
-                  "nameLocation": "11985:9:1",
                   "nodeType": "VariableDeclaration",
                   "scope": 860,
                   "src": "11977:17:1",
@@ -7632,24 +7380,18 @@
           }
         ],
         "scope": 862,
-        "src": "549:11548:1",
-        "usedErrors": [],
-        "usedEvents": [
-          338,
-          342,
-          346
-        ]
+        "src": "549:11548:1"
       }
     ],
     "src": "32:12066:1"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.20+commit.a1b79de6.Emscripten.clang"
+    "version": "0.8.1+commit.df193b15.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-03-20T15:10:16.034Z",
+  "updatedAt": "2025-04-22T09:46:07.107Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

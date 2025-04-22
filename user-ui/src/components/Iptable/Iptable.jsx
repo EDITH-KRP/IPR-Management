@@ -12,7 +12,7 @@ const Iptable = () => {
     const { nfts, currentAccount} = useContext(TransactionContext);  
 
     //const adminAddress = process.env.REACT_APP_ADMIN_ADDRESS;
-    const adminAddress = 0x226892cb0cc69752C50648E126731C1b97602522;
+    const adminAddress = "0x226892cb0cc69752C50648E126731C1b97602522";
     // console.log("admin game", currentAccount == adminAddress);
     // console.log("classof", adminAddress);
     const [currentItems, setCurrentItems] = useState([]);

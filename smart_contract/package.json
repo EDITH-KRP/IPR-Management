@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "truffle compile",
+    "deploy:sepolia": "node deploy.js",
+    "update-frontend": "node update-frontend.js",
+    "deploy-and-update": "npm run deploy:sepolia && npm run update-frontend"
   },
   "keywords": [],
   "author": "",

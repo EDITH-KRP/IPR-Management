@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {CgProfile} from 'react-icons/cg';
 // import '../css/Header.css';
 import {logo} from "../../assets/index";
+import { Search } from "../index";
 
 const Header = () => {
   const [show, setShow] = useState(false);
@@ -14,10 +15,18 @@ const Header = () => {
     data-testid='header-start'
     className='header top-0 fixed z-10 flex justify-between bg-gray-100 shadow-xl opacity-75 w-full py-3 text-white px-8'
     >
-      {/* <div className='flex justify-between'> */}
-      <div><Link to="/"><img src={logo} alt="home-image" className='cursor-pointer h-14 rounded-full'/></Link> </div>
+      <div className="flex items-center">
+        <Link to="/">
+          <img src={logo} alt="home-image" className='cursor-pointer h-14 rounded-full'/>
+        </Link>
+      </div>
+      
+      <div className="flex-1 max-w-md mx-4">
+        <Search />
+      </div>
+      
       <nav className=''>
-        <ul className='flex justify-between gap-16 mt-3 text-xl font-serif'>
+        <ul className='flex justify-between gap-8 mt-3 text-xl font-serif'>
           <li className=''>
             <Link className='hover:text-black text-gray-800' to="/">Home</Link>
           </li>
@@ -44,7 +53,6 @@ const Header = () => {
 
         </ul>
       </nav>
-    {/* </div> */}
     </header>
   )
 }

@@ -8,11 +8,24 @@ export const TransactionContext = React.createContext();
 const { ethereum } = window;
 
 const createEthereumContract = () => {
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
-  const transactionsContract = new ethers.Contract(contractAddress, contractABI, signer);
+  // For MetaMask (or other injected wallets)
+  let provider;
+  let signer;
   
-  console.log('ipcontract',transactionsContract);
+  if (ethereum) {
+    // Use the injected provider (MetaMask)
+    provider = new ethers.providers.Web3Provider(ethereum);
+    signer = provider.getSigner();
+  } else {
+    // Fallback to Alchemy provider for Sepolia
+    const alchemyApiKey = process.env.REACT_APP_ALCHEMY_API_KEY || "YOUR-API-KEY";
+    provider = new ethers.providers.AlchemyProvider("sepolia", alchemyApiKey);
+    console.log("No wallet connected, using read-only Alchemy provider");
+  }
+  
+  const transactionsContract = new ethers.Contract(contractAddress, contractABI, signer || provider);
+  
+  console.log('ipcontract', transactionsContract);
   return transactionsContract;
 };
 
@@ -64,7 +77,7 @@ export const TransactionsProvider = ({ children }) => {
     try {
       if (ethereum) {
         const transactionsContract = createEthereumContract();
-        console.log('Connect to your sepolia metamask account!');
+        console.log('Connect to your Sepolia network Metamask account!');
         //const currentTransactionCount = await transactionsContract.countEmployees();
         //setTransactionCount(currentTransactionCount);
         //window.localStorage.setItem("transactionCount", currentTransactionCount);
