@@ -38,6 +38,10 @@ const Header = () => {
           <li>
             <Link className='hover:text-black text-gray-800' to="/bidders">Bidders</Link>
           </li>
+
+          <li>
+            <Link className='hover:text-black text-gray-800' to="/dataset">Dataset</Link>
+          </li>
          
           <li>
                <CgProfile size={37} 

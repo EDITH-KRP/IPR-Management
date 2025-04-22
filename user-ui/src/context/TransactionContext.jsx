@@ -422,6 +422,7 @@ const epochTohumanReadble = (timestamp) => {
   useEffect(() => {
     checkIfWalletIsConnect();
     checkIfTransactionsExists();
+    getAllNFTs(); // Load all NFTs when the component mounts
     // getNFTData(1);
     // handleWalletBalance()
   }, []);

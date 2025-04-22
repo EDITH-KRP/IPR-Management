@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Route, Routes, useLocation} from 'react-router-dom';
-import {Ip, Bidder, Home} from "./pages/index";
+import {Ip, Bidder, Home, SearchResults, Mybidding, DataManagement} from "./pages/index";
 import {
   Header,
   Footer,
@@ -14,7 +14,6 @@ import {
   NftDetails
 }
 from "./components/index";
-import Mybidding from "./pages/Mybidding/Mybidding";
 
 function App() {
   const location = useLocation();
@@ -46,6 +45,8 @@ function App() {
             <Route path='/table' element={<Tablen/>} />
             <Route path='/tab' element={<ReactTable/>} />
             <Route path='/mybidding' element={<Mybidding/>} />
+            <Route path='/search' element={<SearchResults/>} />
+            <Route path='/dataset' element={<DataManagement/>} />
             {/* admin routes */}
             <Route path='/status/:id' element={<Status />} />
             <Route path='/bidders/:id/:address' element={<Bidder />} />
