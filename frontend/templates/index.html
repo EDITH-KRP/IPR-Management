@@ -1,0 +1,152 @@
+{% extends "layout.html" %}
+
+{% block title %}Patent Registry - Secure Your Intellectual Property{% endblock %}
+
+{% block content %}
+<div class="space-y-12">
+    <!-- Hero Section -->
+    <section class="py-12 md:py-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-6 animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text-blockchain">Secure Your Intellectual Property on the Blockchain</h1>
+                <p class="text-lg text-gray-600 dark:text-gray-300">Register, manage, and trade patents using blockchain technology for enhanced security and transparency.</p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="/register" class="btn btn-primary">
+                        <i class="fas fa-file-signature mr-2"></i>Register a Patent
+                    </a>
+                    <a href="/marketplace" class="btn btn-outline">
+                        <i class="fas fa-store mr-2"></i>Browse Marketplace
+                    </a>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <div class="relative w-full max-w-md animate-float">
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-10 blur-xl rounded-full"></div>
+                    <img src="{{ url_for('static', filename='img/blockchain-patent.svg') }}" alt="Blockchain Patent" class="relative z-10" onerror="this.onerror=null; this.src='https://via.placeholder.com/500x400?text=Blockchain+Patent'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-8 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="text-center p-4">
+                <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">{{ patents|length }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">Patents Registered</div>
+            </div>
+            <div class="text-center p-4">
+                <div class="text-3xl font-bold text-purple-600 dark:text-purple-400">{{ patents|length * 2 }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">Transactions</div>
+            </div>
+            <div class="text-center p-4">
+                <div class="text-3xl font-bold text-green-600 dark:text-green-400">{{ patents|length // 2 }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">Active Listings</div>
+            </div>
+            <div class="text-center p-4">
+                <div class="text-3xl font-bold text-yellow-600 dark:text-yellow-400">{{ patents|length * 0.5 }}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">ETH Volume</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Patents Section -->
+    <section class="py-8">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold">Recent Patents</h2>
+            <a href="/search" class="btn btn-sm btn-outline">
+                <i class="fas fa-search mr-2"></i>Search All
+            </a>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for patent in patents %}
+            <div class="patent-card stagger-item animate-fade-in">
+                <div class="patent-card-header">
+                    <div class="flex justify-between items-start">
+                        <div class="token-id">{{ patent.tokenId }}</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400">
+                            <i class="fas fa-clock mr-1"></i>New
+                        </div>
+                    </div>
+                </div>
+                <div class="patent-card-body">
+                    <h3 class="text-xl font-semibold mb-2">{{ patent.title }}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">{{ patent.description }}</p>
+                    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                        <i class="fas fa-user-circle mr-1"></i>
+                        <span class="blockchain-address">{{ patent.owner }}</span>
+                    </div>
+                </div>
+                <div class="patent-card-footer">
+                    <a href="/ip/{{ patent.tokenId }}" class="btn btn-sm btn-primary w-full">
+                        <i class="fas fa-info-circle mr-2"></i>View Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-8">
+        <h2 class="text-2xl font-bold mb-8 text-center">Platform Features</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="card hover:border-blue-500">
+                <div class="text-blue-500 dark:text-blue-400 text-3xl mb-4">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Secure Ownership</h3>
+                <p class="text-gray-600 dark:text-gray-300">Blockchain-based NFTs ensure your intellectual property is securely registered and ownership is verifiable.</p>
+            </div>
+            
+            <div class="card hover:border-purple-500">
+                <div class="text-purple-500 dark:text-purple-400 text-3xl mb-4">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Trade Patents</h3>
+                <p class="text-gray-600 dark:text-gray-300">List your patents for sale or place bids on others' intellectual property in our marketplace.</p>
+            </div>
+            
+            <div class="card hover:border-green-500">
+                <div class="text-green-500 dark:text-green-400 text-3xl mb-4">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Transparent History</h3>
+                <p class="text-gray-600 dark:text-gray-300">All transactions and ownership transfers are recorded on the blockchain for complete transparency.</p>
+            </div>
+            
+            <div class="card hover:border-yellow-500">
+                <div class="text-yellow-500 dark:text-yellow-400 text-3xl mb-4">
+                    <i class="fas fa-hourglass-half"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Time-Limited Protection</h3>
+                <p class="text-gray-600 dark:text-gray-300">Patents have expiration dates that can be extended by the owner for continued protection.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-12">
+        <div class="bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl p-8 md:p-12 text-white text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready to Secure Your Intellectual Property?</h2>
+            <p class="text-lg mb-8 max-w-2xl mx-auto">Join the blockchain revolution and protect your innovations with our decentralized patent registry.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/register" class="btn bg-white text-blue-600 hover:bg-gray-100">
+                    <i class="fas fa-rocket mr-2"></i>Get Started
+                </a>
+                <a href="/marketplace" class="btn btn-outline border-white text-white hover:bg-white hover:text-blue-600">
+                    <i class="fas fa-store mr-2"></i>Explore Marketplace
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Any page-specific JavaScript can go here
+</script>
+{% endblock %}

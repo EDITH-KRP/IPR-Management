@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Bids - Patent Registry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Patent Registry Blockchain Platform</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/marketplace">Marketplace</a></li>
+                <li><a href="/dashboard" class="active">My Dashboard</a></li>
+                <li><a href="/register">Register Patent</a></li>
+                <li id="admin-link" style="display: none;"><a href="/admin/verify">Admin Verification</a></li>
+            </ul>
+        </nav>
+        <div class="wallet-container">
+            <div id="wallet-status">
+                <span id="wallet-address">Wallet not connected</span>
+                <button id="connect-wallet">Connect Wallet</button>
+                <button id="disconnect-wallet" style="display: none;">Disconnect</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="bids-header">
+            <h2>Bids for Patent #{{ token_id }}</h2>
+            <div class="bids-actions">
+                <a href="/dashboard" class="btn secondary">Back to Dashboard</a>
+                <a href="/ip/{{ token_id }}" class="btn secondary">View Patent Details</a>
+            </div>
+        </section>
+
+        <section class="patent-info">
+            <h3>Patent Information</h3>
+            <div class="patent-info-container">
+                <div class="patent-info-item">
+                    <strong>Sale Price:</strong>
+                    <span>{{ ip_details.salePrice }} ETH</span>
+                </div>
+                <div class="patent-info-item">
+                    <strong>Original Creator:</strong>
+                    <span>{{ ip_details.originalCreator[:6] }}...{{ ip_details.originalCreator[-4:] }}</span>
+                </div>
+                <div class="patent-info-item">
+                    <strong>Expiry Date:</strong>
+                    <span>{{ ip_details.expiryTime|timestamp_to_date }}</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="bids-list">
+            <h3>Current Bids</h3>
+            
+            {% if bids %}
+                <div class="bids-table-container">
+                    <table class="bids-table">
+                        <thead>
+                            <tr>
+                                <th>Bidder</th>
+                                <th>Bid Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bid in bids %}
+                                <tr>
+                                    <td>{{ bid.bidder[:6] }}...{{ bid.bidder[-4:] }}</td>
+                                    <td>{{ bid.amount }} ETH</td>
+                                    <td>
+                                        <button class="btn accept-bid-btn" data-token-id="{{ token_id }}" data-bid-index="{{ bid.index }}">Accept Bid</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="no-bids">
+                    <p>There are no bids for this patent yet.</p>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Patent Registry Blockchain Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const connectWalletBtn = document.getElementById('connect-wallet');
+            const disconnectWalletBtn = document.getElementById('disconnect-wallet');
+            const walletAddressSpan = document.getElementById('wallet-address');
+            const adminLink = document.getElementById('admin-link');
+            
+            // Check if wallet is already connected in session
+            const savedWallet = localStorage.getItem('wallet_address');
+            if (savedWallet) {
+                fetch('/connect_wallet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'wallet_address': savedWallet
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.wallet) {
+                        walletAddressSpan.textContent = `${data.wallet.substring(0, 6)}...${data.wallet.substring(data.wallet.length - 4)}`;
+                        connectWalletBtn.style.display = 'none';
+                        disconnectWalletBtn.style.display = 'inline-block';
+                        
+                        if (data.is_admin) {
+                            adminLink.style.display = 'inline-block';
+                        }
+                    }
+                });
+            }
+            
+            // Connect wallet button
+            connectWalletBtn.addEventListener('click', async function() {
+                if (window.ethereum) {
+                    try {
+                        // Request account access
+                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        const account = accounts[0];
+                        
+                        // Save to session
+                        fetch('/connect_wallet', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'wallet_address': account
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                localStorage.setItem('wallet_address', account);
+                                walletAddressSpan.textContent = `${account.substring(0, 6)}...${account.substring(account.length - 4)}`;
+                                connectWalletBtn.style.display = 'none';
+                                disconnectWalletBtn.style.display = 'inline-block';
+                                
+                                if (data.is_admin) {
+                                    adminLink.style.display = 'inline-block';
+                                }
+                            }
+                        });
+                    } catch (error) {
+                        console.error("User denied account access");
+                    }
+                } else {
+                    alert('Please install MetaMask or another Ethereum wallet provider');
+                }
+            });
+            
+            // Disconnect wallet button
+            disconnectWalletBtn.addEventListener('click', function() {
+                fetch('/disconnect_wallet', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        localStorage.removeItem('wallet_address');
+                        walletAddressSpan.textContent = 'Wallet not connected';
+                        connectWalletBtn.style.display = 'inline-block';
+                        disconnectWalletBtn.style.display = 'none';
+                        adminLink.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Accept bid buttons
+            const acceptBidBtns = document.querySelectorAll('.accept-bid-btn');
+            acceptBidBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!savedWallet) {
+                        alert('Please connect your wallet first');
+                        return;
+                    }
+                    
+                    const tokenId = this.getAttribute('data-token-id');
+                    const bidIndex = this.getAttribute('data-bid-index');
+                    
+                    if (confirm('Are you sure you want to accept this bid? This will transfer ownership of your patent to the bidder.')) {
+                        fetch('/accept_bid', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'token_id': tokenId,
+                                'bid_index': bidIndex
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message);
+                                window.location.href = '/dashboard';
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while processing your request');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+    <title>View Bids - Patent Registry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Patent Registry Blockchain Platform</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/marketplace">Marketplace</a></li>
+                <li><a href="/dashboard" class="active">My Dashboard</a></li>
+                <li><a href="/register">Register Patent</a></li>
+                <li id="admin-link" style="display: none;"><a href="/admin/verify">Admin Verification</a></li>
+            </ul>
+        </nav>
+        <div class="wallet-container">
+            <div id="wallet-status">
+                <span id="wallet-address">Wallet not connected</span>
+                <button id="connect-wallet">Connect Wallet</button>
+                <button id="disconnect-wallet" style="display: none;">Disconnect</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="bids-header">
+            <h2>Bids for Patent #{{ token_id }}</h2>
+            <div class="bids-actions">
+                <a href="/dashboard" class="btn secondary">Back to Dashboard</a>
+                <a href="/ip/{{ token_id }}" class="btn secondary">View Patent Details</a>
+            </div>
+        </section>
+
+        <section class="patent-info">
+            <h3>Patent Information</h3>
+            <div class="patent-info-container">
+                <div class="patent-info-item">
+                    <strong>Sale Price:</strong>
+                    <span>{{ ip_details.salePrice }} ETH</span>
+                </div>
+                <div class="patent-info-item">
+                    <strong>Original Creator:</strong>
+                    <span>{{ ip_details.originalCreator[:6] }}...{{ ip_details.originalCreator[-4:] }}</span>
+                </div>
+                <div class="patent-info-item">
+                    <strong>Expiry Date:</strong>
+                    <span>{{ ip_details.expiryTime|timestamp_to_date }}</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="bids-list">
+            <h3>Current Bids</h3>
+            
+            {% if bids %}
+                <div class="bids-table-container">
+                    <table class="bids-table">
+                        <thead>
+                            <tr>
+                                <th>Bidder</th>
+                                <th>Bid Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bid in bids %}
+                                <tr>
+                                    <td>{{ bid.bidder[:6] }}...{{ bid.bidder[-4:] }}</td>
+                                    <td>{{ bid.amount }} ETH</td>
+                                    <td>
+                                        <button class="btn accept-bid-btn" data-token-id="{{ token_id }}" data-bid-index="{{ bid.index }}">Accept Bid</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="no-bids">
+                    <p>There are no bids for this patent yet.</p>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Patent Registry Blockchain Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const connectWalletBtn = document.getElementById('connect-wallet');
+            const disconnectWalletBtn = document.getElementById('disconnect-wallet');
+            const walletAddressSpan = document.getElementById('wallet-address');
+            const adminLink = document.getElementById('admin-link');
+            
+            // Check if wallet is already connected in session
+            const savedWallet = localStorage.getItem('wallet_address');
+            if (savedWallet) {
+                fetch('/connect_wallet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'wallet_address': savedWallet
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.wallet) {
+                        walletAddressSpan.textContent = `${data.wallet.substring(0, 6)}...${data.wallet.substring(data.wallet.length - 4)}`;
+                        connectWalletBtn.style.display = 'none';
+                        disconnectWalletBtn.style.display = 'inline-block';
+                        
+                        if (data.is_admin) {
+                            adminLink.style.display = 'inline-block';
+                        }
+                    }
+                });
+            }
+            
+            // Connect wallet button
+            connectWalletBtn.addEventListener('click', async function() {
+                if (window.ethereum) {
+                    try {
+                        // Request account access
+                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        const account = accounts[0];
+                        
+                        // Save to session
+                        fetch('/connect_wallet', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'wallet_address': account
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                localStorage.setItem('wallet_address', account);
+                                walletAddressSpan.textContent = `${account.substring(0, 6)}...${account.substring(account.length - 4)}`;
+                                connectWalletBtn.style.display = 'none';
+                                disconnectWalletBtn.style.display = 'inline-block';
+                                
+                                if (data.is_admin) {
+                                    adminLink.style.display = 'inline-block';
+                                }
+                            }
+                        });
+                    } catch (error) {
+                        console.error("User denied account access");
+                    }
+                } else {
+                    alert('Please install MetaMask or another Ethereum wallet provider');
+                }
+            });
+            
+            // Disconnect wallet button
+            disconnectWalletBtn.addEventListener('click', function() {
+                fetch('/disconnect_wallet', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        localStorage.removeItem('wallet_address');
+                        walletAddressSpan.textContent = 'Wallet not connected';
+                        connectWalletBtn.style.display = 'inline-block';
+                        disconnectWalletBtn.style.display = 'none';
+                        adminLink.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Accept bid buttons
+            const acceptBidBtns = document.querySelectorAll('.accept-bid-btn');
+            acceptBidBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!savedWallet) {
+                        alert('Please connect your wallet first');
+                        return;
+                    }
+                    
+                    const tokenId = this.getAttribute('data-token-id');
+                    const bidIndex = this.getAttribute('data-bid-index');
+                    
+                    if (confirm('Are you sure you want to accept this bid? This will transfer ownership of your patent to the bidder.')) {
+                        fetch('/accept_bid', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'token_id': tokenId,
+                                'bid_index': bidIndex
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message);
+                                window.location.href = '/dashboard';
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while processing your request');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+    <title>View Bids - Patent Registry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Patent Registry Blockchain Platform</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/marketplace">Marketplace</a></li>
+                <li><a href="/dashboard" class="active">My Dashboard</a></li>
+                <li><a href="/register">Register Patent</a></li>
+                <li id="admin-link" style="display: none;"><a href="/admin/verify">Admin Verification</a></li>
+            </ul>
+        </nav>
+        <div class="wallet-container">
+            <div id="wallet-status">
+                <span id="wallet-address">Wallet not connected</span>
+                <button id="connect-wallet">Connect Wallet</button>
+                <button id="disconnect-wallet" style="display: none;">Disconnect</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="bids-header">
+            <h2>Bids for Patent #{{ token_id }}</h2>
+            <div class="bids-actions">
+                <a href="/dashboard" class="btn secondary">Back to Dashboard</a>
+                <a href="/ip/{{ token_id }}" class="btn secondary">View Patent Details</a>
+            </div>
+        </section>
+
+        <section class="patent-info">
+            <h3>Patent Information</h3>
+            <div class="patent-info-container">
+                <div class="patent-info-item">
+                    <strong>Sale Price:</strong>
+                    <span>{{ ip_details.salePrice }} ETH</span>
+                </div>
+                <div class="patent-info-item">
+                    <strong>Original Creator:</strong>
+                    <span>{{ ip_details.originalCreator[:6] }}...{{ ip_details.originalCreator[-4:] }}</span>
+                </div>
+                <div class="patent-info-item">
+                    <strong>Expiry Date:</strong>
+                    <span>{{ ip_details.expiryTime|timestamp_to_date }}</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="bids-list">
+            <h3>Current Bids</h3>
+            
+            {% if bids %}
+                <div class="bids-table-container">
+                    <table class="bids-table">
+                        <thead>
+                            <tr>
+                                <th>Bidder</th>
+                                <th>Bid Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bid in bids %}
+                                <tr>
+                                    <td>{{ bid.bidder[:6] }}...{{ bid.bidder[-4:] }}</td>
+                                    <td>{{ bid.amount }} ETH</td>
+                                    <td>
+                                        <button class="btn accept-bid-btn" data-token-id="{{ token_id }}" data-bid-index="{{ bid.index }}">Accept Bid</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="no-bids">
+                    <p>There are no bids for this patent yet.</p>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Patent Registry Blockchain Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const connectWalletBtn = document.getElementById('connect-wallet');
+            const disconnectWalletBtn = document.getElementById('disconnect-wallet');
+            const walletAddressSpan = document.getElementById('wallet-address');
+            const adminLink = document.getElementById('admin-link');
+            
+            // Check if wallet is already connected in session
+            const savedWallet = localStorage.getItem('wallet_address');
+            if (savedWallet) {
+                fetch('/connect_wallet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'wallet_address': savedWallet
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.wallet) {
+                        walletAddressSpan.textContent = `${data.wallet.substring(0, 6)}...${data.wallet.substring(data.wallet.length - 4)}`;
+                        connectWalletBtn.style.display = 'none';
+                        disconnectWalletBtn.style.display = 'inline-block';
+                        
+                        if (data.is_admin) {
+                            adminLink.style.display = 'inline-block';
+                        }
+                    }
+                });
+            }
+            
+            // Connect wallet button
+            connectWalletBtn.addEventListener('click', async function() {
+                if (window.ethereum) {
+                    try {
+                        // Request account access
+                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        const account = accounts[0];
+                        
+                        // Save to session
+                        fetch('/connect_wallet', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'wallet_address': account
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                localStorage.setItem('wallet_address', account);
+                                walletAddressSpan.textContent = `${account.substring(0, 6)}...${account.substring(account.length - 4)}`;
+                                connectWalletBtn.style.display = 'none';
+                                disconnectWalletBtn.style.display = 'inline-block';
+                                
+                                if (data.is_admin) {
+                                    adminLink.style.display = 'inline-block';
+                                }
+                            }
+                        });
+                    } catch (error) {
+                        console.error("User denied account access");
+                    }
+                } else {
+                    alert('Please install MetaMask or another Ethereum wallet provider');
+                }
+            });
+            
+            // Disconnect wallet button
+            disconnectWalletBtn.addEventListener('click', function() {
+                fetch('/disconnect_wallet', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        localStorage.removeItem('wallet_address');
+                        walletAddressSpan.textContent = 'Wallet not connected';
+                        connectWalletBtn.style.display = 'inline-block';
+                        disconnectWalletBtn.style.display = 'none';
+                        adminLink.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Accept bid buttons
+            const acceptBidBtns = document.querySelectorAll('.accept-bid-btn');
+            acceptBidBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!savedWallet) {
+                        alert('Please connect your wallet first');
+                        return;
+                    }
+                    
+                    const tokenId = this.getAttribute('data-token-id');
+                    const bidIndex = this.getAttribute('data-bid-index');
+                    
+                    if (confirm('Are you sure you want to accept this bid? This will transfer ownership of your patent to the bidder.')) {
+                        fetch('/accept_bid', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'token_id': tokenId,
+                                'bid_index': bidIndex
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message);
+                                window.location.href = '/dashboard';
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while processing your request');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

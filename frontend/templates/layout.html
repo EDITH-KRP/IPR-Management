@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Patent Registry DApp{% endblock %}</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    
+    <!-- Web3.js -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+    {% block head_scripts %}{% endblock %}
+</head>
+<body class="min-h-screen flex flex-col bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <a href="/" class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white mr-3">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <span class="text-xl font-bold">Patent Registry</span>
+                        </a>
+                    </div>
+                    
+                    <div class="flex md:hidden">
+                        <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white focus:outline-none">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-1">
+                    <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">
+                        <i class="fas fa-home mr-1"></i> Home
+                    </a>
+                    <a href="/marketplace" class="nav-link {% if request.path == '/marketplace' %}active{% endif %}">
+                        <i class="fas fa-store mr-1"></i> Marketplace
+                    </a>
+                    <a href="/dashboard" class="nav-link {% if request.path == '/dashboard' %}active{% endif %}">
+                        <i class="fas fa-tachometer-alt mr-1"></i> Dashboard
+                    </a>
+                    <a href="/register" class="nav-link {% if request.path == '/register' %}active{% endif %}">
+                        <i class="fas fa-file-signature mr-1"></i> Register
+                    </a>
+                    <a href="/search" class="nav-link {% if request.path == '/search' %}active{% endif %}">
+                        <i class="fas fa-search mr-1"></i> Search
+                    </a>
+                    <a id="admin-link" href="/admin/verify" class="nav-link {% if '/admin/' in request.path %}active{% endif %}" style="display: none;">
+                        <i class="fas fa-shield-alt mr-1"></i> Admin
+                    </a>
+                </nav>
+                
+                <!-- Wallet Connection -->
+                <div class="hidden md:flex items-center mt-4 md:mt-0">
+                    <div id="wallet-status" class="flex items-center">
+                        <div id="connection-indicator" class="connection-status disconnected mr-3">
+                            <span id="connection-text">Disconnected</span>
+                        </div>
+                        <span id="wallet-address" class="mr-3 text-sm">Wallet not connected</span>
+                        <button id="connect-wallet" class="btn btn-sm btn-primary">
+                            <i class="fas fa-wallet mr-1"></i> Connect
+                        </button>
+                        <button id="disconnect-wallet" class="btn btn-sm btn-outline" style="display: none;">
+                            <i class="fas fa-sign-out-alt mr-1"></i> Disconnect
+                        </button>
+                    </div>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="ml-4 p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none">
+                        <i id="theme-icon" class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="md:hidden mt-4 pb-2 hidden">
+                <div class="flex flex-col space-y-2">
+                    <a href="/" class="mobile-nav-link {% if request.path == '/' %}active{% endif %}">
+                        <i class="fas fa-home mr-2"></i> Home
+                    </a>
+                    <a href="/marketplace" class="mobile-nav-link {% if request.path == '/marketplace' %}active{% endif %}">
+                        <i class="fas fa-store mr-2"></i> Marketplace
+                    </a>
+                    <a href="/dashboard" class="mobile-nav-link {% if request.path == '/dashboard' %}active{% endif %}">
+                        <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+                    </a>
+                    <a href="/register" class="mobile-nav-link {% if request.path == '/register' %}active{% endif %}">
+                        <i class="fas fa-file-signature mr-2"></i> Register
+                    </a>
+                    <a href="/search" class="mobile-nav-link {% if request.path == '/search' %}active{% endif %}">
+                        <i class="fas fa-search mr-2"></i> Search
+                    </a>
+                    <a id="mobile-admin-link" href="/admin/verify" class="mobile-nav-link {% if '/admin/' in request.path %}active{% endif %}" style="display: none;">
+                        <i class="fas fa-shield-alt mr-2"></i> Admin
+                    </a>
+                    
+                    <div class="border-t border-gray-200 dark:border-gray-700 my-2 pt-2">
+                        <div id="mobile-wallet-status" class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div id="mobile-connection-indicator" class="connection-status disconnected mr-2">
+                                    <span id="mobile-connection-text">Disconnected</span>
+                                </div>
+                                <span id="mobile-wallet-address" class="text-sm">Wallet not connected</span>
+                            </div>
+                            <button id="mobile-connect-wallet" class="btn btn-sm btn-primary">
+                                <i class="fas fa-wallet mr-1"></i> Connect
+                            </button>
+                            <button id="mobile-disconnect-wallet" class="btn btn-sm btn-outline" style="display: none;">
+                                <i class="fas fa-sign-out-alt mr-1"></i> Disconnect
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mx-auto px-4 py-4">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }} animate-slide-down">
+                        {{ message }}
+                        <span class="close-flash">&times;</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-6">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Patent Registry DApp</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Blockchain-powered intellectual property management platform for secure patent registration and trading.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
+                            <i class="fab fa-discord text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">Home</a></li>
+                        <li><a href="/marketplace" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">Marketplace</a></li>
+                        <li><a href="/dashboard" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">Dashboard</a></li>
+                        <li><a href="/register" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">Register Patent</a></li>
+                        <li><a href="/search" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">Search</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-gray-400 mr-2"></i>
+                            <a href="mailto:info@patentregistry.eth" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">info@patentregistry.eth</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-discord text-gray-400 mr-2"></i>
+                            <span class="text-gray-600 dark:text-gray-300">PatentRegistry</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-globe text-gray-400 mr-2"></i>
+                            <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">patentregistry.eth</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-6 text-center">
+                <p class="text-gray-500 dark:text-gray-400">&copy; 2023 Patent Registry DApp. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+            
+            // Theme toggle click handler
+            themeToggle.addEventListener('click', function() {
+                document.documentElement.classList.toggle('dark');
+                
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            });
+            
+            // Flash message close button
+            document.querySelectorAll('.close-flash').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.parentElement.style.display = 'none';
+                });
+            });
+            
+            // Wallet connection functionality
+            const connectWalletBtn = document.getElementById('connect-wallet');
+            const disconnectWalletBtn = document.getElementById('disconnect-wallet');
+            const mobileConnectWalletBtn = document.getElementById('mobile-connect-wallet');
+            const mobileDisconnectWalletBtn = document.getElementById('mobile-disconnect-wallet');
+            const walletAddressSpan = document.getElementById('wallet-address');
+            const mobileWalletAddressSpan = document.getElementById('mobile-wallet-address');
+            const connectionIndicator = document.getElementById('connection-indicator');
+            const mobileConnectionIndicator = document.getElementById('mobile-connection-indicator');
+            const connectionText = document.getElementById('connection-text');
+            const mobileConnectionText = document.getElementById('mobile-connection-text');
+            const adminLink = document.getElementById('admin-link');
+            const mobileAdminLink = document.getElementById('mobile-admin-link');
+            
+            // Function to update connection status UI
+            function updateConnectionStatus(status, address = '') {
+                if (status === 'connected') {
+                    // Desktop UI
+                    walletAddressSpan.textContent = address.substring(0, 6) + '...' + address.substring(address.length - 4);
+                    connectionIndicator.className = 'connection-status connected mr-3';
+                    connectionText.textContent = 'Connected';
+                    connectWalletBtn.style.display = 'none';
+                    disconnectWalletBtn.style.display = 'inline-flex';
+                    
+                    // Mobile UI
+                    mobileWalletAddressSpan.textContent = address.substring(0, 6) + '...' + address.substring(address.length - 4);
+                    mobileConnectionIndicator.className = 'connection-status connected mr-2';
+                    mobileConnectionText.textContent = 'Connected';
+                    mobileConnectWalletBtn.style.display = 'none';
+                    mobileDisconnectWalletBtn.style.display = 'inline-flex';
+                } else if (status === 'pending') {
+                    // Desktop UI
+                    connectionIndicator.className = 'connection-status pending mr-3';
+                    connectionText.textContent = 'Connecting...';
+                    
+                    // Mobile UI
+                    mobileConnectionIndicator.className = 'connection-status pending mr-2';
+                    mobileConnectionText.textContent = 'Connecting...';
+                } else {
+                    // Desktop UI
+                    walletAddressSpan.textContent = 'Wallet not connected';
+                    connectionIndicator.className = 'connection-status disconnected mr-3';
+                    connectionText.textContent = 'Disconnected';
+                    connectWalletBtn.style.display = 'inline-flex';
+                    disconnectWalletBtn.style.display = 'none';
+                    adminLink.style.display = 'none';
+                    
+                    // Mobile UI
+                    mobileWalletAddressSpan.textContent = 'Wallet not connected';
+                    mobileConnectionIndicator.className = 'connection-status disconnected mr-2';
+                    mobileConnectionText.textContent = 'Disconnected';
+                    mobileConnectWalletBtn.style.display = 'inline-flex';
+                    mobileDisconnectWalletBtn.style.display = 'none';
+                    mobileAdminLink.style.display = 'none';
+                }
+            }
+            
+            // Check if wallet is already connected in session
+            const savedWallet = localStorage.getItem('wallet_address');
+            if (savedWallet) {
+                updateConnectionStatus('pending');
+                
+                fetch('/connect_wallet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'wallet_address': savedWallet
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.wallet) {
+                        updateConnectionStatus('connected', data.wallet);
+                        
+                        if (data.is_admin) {
+                            adminLink.style.display = 'inline-flex';
+                            mobileAdminLink.style.display = 'block';
+                        }
+                    } else {
+                        updateConnectionStatus('disconnected');
+                        localStorage.removeItem('wallet_address');
+                    }
+                })
+                .catch(error => {
+                    console.error('Connection error:', error);
+                    updateConnectionStatus('disconnected');
+                    localStorage.removeItem('wallet_address');
+                });
+            }
+            
+            // Connect wallet button click handler (desktop)
+            connectWalletBtn.addEventListener('click', async function() {
+                connectWallet();
+            });
+            
+            // Connect wallet button click handler (mobile)
+            mobileConnectWalletBtn.addEventListener('click', async function() {
+                connectWallet();
+            });
+            
+            // Disconnect wallet button click handler (desktop)
+            disconnectWalletBtn.addEventListener('click', function() {
+                disconnectWallet();
+            });
+            
+            // Disconnect wallet button click handler (mobile)
+            mobileDisconnectWalletBtn.addEventListener('click', function() {
+                disconnectWallet();
+            });
+            
+            // Connect wallet function
+            async function connectWallet() {
+                if (typeof window.ethereum !== 'undefined') {
+                    try {
+                        updateConnectionStatus('pending');
+                        
+                        // Request account access
+                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        const walletAddress = accounts[0];
+                        
+                        // Send wallet address to server
+                        fetch('/connect_wallet', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'wallet_address': walletAddress
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                updateConnectionStatus('connected', walletAddress);
+                                localStorage.setItem('wallet_address', walletAddress);
+                                
+                                if (data.is_admin) {
+                                    adminLink.style.display = 'inline-flex';
+                                    mobileAdminLink.style.display = 'block';
+                                }
+                            } else {
+                                updateConnectionStatus('disconnected');
+                                alert('Failed to connect wallet: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Connection error:', error);
+                            updateConnectionStatus('disconnected');
+                            alert('Error connecting wallet. Please try again.');
+                        });
+                    } catch (error) {
+                        console.error('User rejected request:', error);
+                        updateConnectionStatus('disconnected');
+                    }
+                } else {
+                    alert('MetaMask is not installed. Please install it to use this application.');
+                    updateConnectionStatus('disconnected');
+                }
+            }
+            
+            // Disconnect wallet function
+            function disconnectWallet() {
+                fetch('/disconnect_wallet', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateConnectionStatus('disconnected');
+                        localStorage.removeItem('wallet_address');
+                    }
+                })
+                .catch(error => {
+                    console.error('Disconnection error:', error);
+                });
+            }
+            
+            // Handle account changes
+            if (window.ethereum) {
+                window.ethereum.on('accountsChanged', function (accounts) {
+                    if (accounts.length === 0) {
+                        // User disconnected their wallet
+                        updateConnectionStatus('disconnected');
+                        localStorage.removeItem('wallet_address');
+                        
+                        fetch('/disconnect_wallet', {
+                            method: 'POST'
+                        }).catch(error => {
+                            console.error('Disconnection error:', error);
+                        });
+                    } else {
+                        // User switched accounts
+                        const newWalletAddress = accounts[0];
+                        
+                        fetch('/connect_wallet', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'wallet_address': newWalletAddress
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                updateConnectionStatus('connected', newWalletAddress);
+                                localStorage.setItem('wallet_address', newWalletAddress);
+                                
+                                if (data.is_admin) {
+                                    adminLink.style.display = 'inline-flex';
+                                    mobileAdminLink.style.display = 'block';
+                                } else {
+                                    adminLink.style.display = 'none';
+                                    mobileAdminLink.style.display = 'none';
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Connection error:', error);
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>

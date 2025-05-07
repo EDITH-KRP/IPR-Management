@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Verification - Patent Registry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Patent Registry Blockchain Platform</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/marketplace">Marketplace</a></li>
+                <li><a href="/dashboard">My Dashboard</a></li>
+                <li><a href="/register">Register Patent</a></li>
+                <li><a href="/admin/verify" class="active">Admin Verification</a></li>
+            </ul>
+        </nav>
+        <div class="wallet-container">
+            <div id="wallet-status">
+                <span id="wallet-address">Wallet not connected</span>
+                <button id="connect-wallet">Connect Wallet</button>
+                <button id="disconnect-wallet" style="display: none;">Disconnect</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="admin-header">
+            <h2>Admin Verification Panel</h2>
+            <p>Review and verify pending patent registration requests.</p>
+        </section>
+
+        <section class="pending-requests">
+            <h3>Pending Requests</h3>
+            
+            {% if requests %}
+                <div class="requests-table-container">
+                    <table class="requests-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Requester</th>
+                                <th>Deposit</th>
+                                <th>Request Time</th>
+                                <th>Metadata</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for request in requests %}
+                                <tr>
+                                    <td>{{ request.id }}</td>
+                                    <td>{{ request.requester[:6] }}...{{ request.requester[-4:] }}</td>
+                                    <td>{{ request.depositAmount }} ETH</td>
+                                    <td>{{ request.requestTime }}</td>
+                                    <td>
+                                        <button class="btn small view-metadata-btn" data-metadata="{{ request.metadataURI }}">View Metadata</button>
+                                    </td>
+                                    <td class="actions-cell">
+                                        <button class="btn approve-btn" data-request-id="{{ request.id }}">Approve</button>
+                                        <button class="btn reject-btn" data-request-id="{{ request.id }}">Reject</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="no-requests">
+                    <p>There are no pending requests to verify.</p>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Patent Registry Blockchain Platform. All rights reserved.</p>
+    </footer>
+
+    <!-- Modal for viewing metadata -->
+    <div id="metadata-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Patent Metadata</h3>
+            <div id="metadata-content" class="metadata-display">
+                <!-- Metadata will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const connectWalletBtn = document.getElementById('connect-wallet');
+            const disconnectWalletBtn = document.getElementById('disconnect-wallet');
+            const walletAddressSpan = document.getElementById('wallet-address');
+            const metadataModal = document.getElementById('metadata-modal');
+            const metadataModalClose = document.querySelector('#metadata-modal .close');
+            const metadataContent = document.getElementById('metadata-content');
+            
+            // Check if wallet is already connected in session
+            const savedWallet = localStorage.getItem('wallet_address');
+            if (savedWallet) {
+                fetch('/connect_wallet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'wallet_address': savedWallet
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.wallet) {
+                        walletAddressSpan.textContent = `${data.wallet.substring(0, 6)}...${data.wallet.substring(data.wallet.length - 4)}`;
+                        connectWalletBtn.style.display = 'none';
+                        disconnectWalletBtn.style.display = 'inline-block';
+                    }
+                });
+            }
+            
+            // Connect wallet button
+            connectWalletBtn.addEventListener('click', async function() {
+                if (window.ethereum) {
+                    try {
+                        // Request account access
+                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        const account = accounts[0];
+                        
+                        // Save to session
+                        fetch('/connect_wallet', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'wallet_address': account
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                localStorage.setItem('wallet_address', account);
+                                walletAddressSpan.textContent = `${account.substring(0, 6)}...${account.substring(account.length - 4)}`;
+                                connectWalletBtn.style.display = 'none';
+                                disconnectWalletBtn.style.display = 'inline-block';
+                            }
+                        });
+                    } catch (error) {
+                        console.error("User denied account access");
+                    }
+                } else {
+                    alert('Please install MetaMask or another Ethereum wallet provider');
+                }
+            });
+            
+            // Disconnect wallet button
+            disconnectWalletBtn.addEventListener('click', function() {
+                fetch('/disconnect_wallet', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        localStorage.removeItem('wallet_address');
+                        walletAddressSpan.textContent = 'Wallet not connected';
+                        connectWalletBtn.style.display = 'inline-block';
+                        disconnectWalletBtn.style.display = 'none';
+                        window.location.href = '/';
+                    }
+                });
+            });
+            
+            // View metadata buttons
+            const viewMetadataBtns = document.querySelectorAll('.view-metadata-btn');
+            viewMetadataBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const metadata = this.getAttribute('data-metadata');
+                    try {
+                        const metadataObj = JSON.parse(metadata);
+                        let metadataHtml = '<div class="metadata-item-container">';
+                        
+                        for (const [key, value] of Object.entries(metadataObj)) {
+                            metadataHtml += `
+                                <div class="metadata-item">
+                                    <strong>${key}:</strong>
+                                    <span>${value}</span>
+                                </div>
+                            `;
+                        }
+                        
+                        metadataHtml += '</div>';
+                        metadataContent.innerHTML = metadataHtml;
+                    } catch (e) {
+                        metadataContent.innerHTML = `<pre>${metadata}</pre>`;
+                    }
+                    
+                    metadataModal.style.display = 'block';
+                });
+            });
+            
+            // Close metadata modal
+            metadataModalClose.addEventListener('click', function() {
+                metadataModal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target == metadataModal) {
+                    metadataModal.style.display = 'none';
+                }
+            });
+            
+            // Approve buttons
+            const approveBtns = document.querySelectorAll('.approve-btn');
+            approveBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const requestId = this.getAttribute('data-request-id');
+                    
+                    if (confirm('Are you sure you want to approve this patent registration request?')) {
+                        fetch('/admin/verify_request', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'request_id': requestId,
+                                'action': 'approve'
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message);
+                                window.location.reload();
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while processing your request');
+                        });
+                    }
+                });
+            });
+            
+            // Reject buttons
+            const rejectBtns = document.querySelectorAll('.reject-btn');
+            rejectBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const requestId = this.getAttribute('data-request-id');
+                    
+                    if (confirm('Are you sure you want to reject this patent registration request? The deposit will be refunded.')) {
+                        fetch('/admin/verify_request', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'request_id': requestId,
+                                'action': 'reject'
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message);
+                                window.location.reload();
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while processing your request');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Verification - Patent Registry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Patent Registry Blockchain Platform</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/marketplace">Marketplace</a></li>
+                <li><a href="/dashboard">My Dashboard</a></li>
+                <li><a href="/register">Register Patent</a></li>
+                <li><a href="/admin/verify" class="active">Admin Verification</a></li>
+            </ul>
+        </nav>
+        <div class="wallet-container">
+            <div id="wallet-status">
+                <span id="wallet-address">Wallet not connected</span>
+                <button id="connect-wallet">Connect Wallet</button>
+                <button id="disconnect-wallet" style="display: none;">Disconnect</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="admin-header">
+            <h2>Admin Verification Panel</h2>
+            <p>Review and verify pending patent registration requests.</p>
+        </section>
+
+        <section class="pending-requests">
+            <h3>Pending Requests</h3>
+            
+            {% if requests %}
+                <div class="requests-table-container">
+                    <table class="requests-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Requester</th>
+                                <th>Deposit</th>
+                                <th>Request Time</th>
+                                <th>Metadata</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for request in requests %}
+                                <tr>
+                                    <td>{{ request.id }}</td>
+                                    <td>{{ request.requester[:6] }}...{{ request.requester[-4:] }}</td>
+                                    <td>{{ request.depositAmount }} ETH</td>
+                                    <td>{{ request.requestTime }}</td>
+                                    <td>
+                                        <button class="btn small view-metadata-btn" data-metadata="{{ request.metadataURI }}">View Metadata</button>
+                                    </td>
+                                    <td class="actions-cell">
+                                        <button class="btn approve-btn" data-request-id="{{ request.id }}">Approve</button>
+                                        <button class="btn reject-btn" data-request-id="{{ request.id }}">Reject</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="no-requests">
+                    <p>There are no pending requests to verify.</p>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Patent Registry Blockchain Platform. All rights reserved.</p>
+    </footer>
+
+    <!-- Modal for viewing metadata -->
+    <div id="metadata-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Patent Metadata</h3>
+            <div id="metadata-content" class="metadata-display">
+                <!-- Metadata will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const connectWalletBtn = document.getElementById('connect-wallet');
+            const disconnectWalletBtn = document.getElementById('disconnect-wallet');
+            const walletAddressSpan = document.getElementById('wallet-address');
+            const metadataModal = document.getElementById('metadata-modal');
+            const metadataModalClose = document.querySelector('#metadata-modal .close');
+            const metadataContent = document.getElementById('metadata-content');
+            
+            // Check if wallet is already connected in session
+            const savedWallet = localStorage.getItem('wallet_address');
+            if (savedWallet) {
+                fetch('/connect_wallet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'wallet_address': savedWallet
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.wallet) {
+                        walletAddressSpan.textContent = `${data.wallet.substring(0, 6)}...${data.wallet.substring(data.wallet.length - 4)}`;
+                        connectWalletBtn.style.display = 'none';
+                        disconnectWalletBtn.style.display = 'inline-block';
+                    }
+                });
+            }
+            
+            // Connect wallet button
+            connectWalletBtn.addEventListener('click', async function() {
+                if (window.ethereum) {
+                    try {
+                        // Request account access
+                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        const account = accounts[0];
+                        
+                        // Save to session
+                        fetch('/connect_wallet', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'wallet_address': account
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                localStorage.setItem('wallet_address', account);
+                                walletAddressSpan.textContent = `${account.substring(0, 6)}...${account.substring(account.length - 4)}`;
+                                connectWalletBtn.style.display = 'none';
+                                disconnectWalletBtn.style.display = 'inline-block';
+                            }
+                        });
+                    } catch (error) {
+                        console.error("User denied account access");
+                    }
+                } else {
+                    alert('Please install MetaMask or another Ethereum wallet provider');
+                }
+            });
+            
+            // Disconnect wallet button
+            disconnectWalletBtn.addEventListener('click', function() {
+                fetch('/disconnect_wallet', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        localStorage.removeItem('wallet_address');
+                        walletAddressSpan.textContent = 'Wallet not connected';
+                        connectWalletBtn.style.display = 'inline-block';
+                        disconnectWalletBtn.style.display = 'none';
+                        window.location.href = '/';
+                    }
+                });
+            });
+            
+            // View metadata buttons
+            const viewMetadataBtns = document.querySelectorAll('.view-metadata-btn');
+            viewMetadataBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const metadata = this.getAttribute('data-metadata');
+                    try {
+                        const metadataObj = JSON.parse(metadata);
+                        let metadataHtml = '<div class="metadata-item-container">';
+                        
+                        for (const [key, value] of Object.entries(metadataObj)) {
+                            metadataHtml += `
+                                <div class="metadata-item">
+                                    <strong>${key}:</strong>
+                                    <span>${value}</span>
+                                </div>
+                            `;
+                        }
+                        
+                        metadataHtml += '</div>';
+                        metadataContent.innerHTML = metadataHtml;
+                    } catch (e) {
+                        metadataContent.innerHTML = `<pre>${metadata}</pre>`;
+                    }
+                    
+                    metadataModal.style.display = 'block';
+                });
+            });
+            
+            // Close metadata modal
+            metadataModalClose.addEventListener('click', function() {
+                metadataModal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target == metadataModal) {
+                    metadataModal.style.display = 'none';
+                }
+            });
+            
+            // Approve buttons
+            const approveBtns = document.querySelectorAll('.approve-btn');
+            approveBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const requestId = this.getAttribute('data-request-id');
+                    
+                    if (confirm('Are you sure you want to approve this patent registration request?')) {
+                        fetch('/admin/verify_request', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'request_id': requestId,
+                                'action': 'approve'
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message);
+                                window.location.reload();
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while processing your request');
+                        });
+                    }
+                });
+            });
+            
+            // Reject buttons
+            const rejectBtns = document.querySelectorAll('.reject-btn');
+            rejectBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const requestId = this.getAttribute('data-request-id');
+                    
+                    if (confirm('Are you sure you want to reject this patent registration request? The deposit will be refunded.')) {
+                        fetch('/admin/verify_request', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'request_id': requestId,
+                                'action': 'reject'
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message);
+                                window.location.reload();
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while processing your request');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Verification - Patent Registry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Patent Registry Blockchain Platform</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/marketplace">Marketplace</a></li>
+                <li><a href="/dashboard">My Dashboard</a></li>
+                <li><a href="/register">Register Patent</a></li>
+                <li><a href="/admin/verify" class="active">Admin Verification</a></li>
+            </ul>
+        </nav>
+        <div class="wallet-container">
+            <div id="wallet-status">
+                <span id="wallet-address">Wallet not connected</span>
+                <button id="connect-wallet">Connect Wallet</button>
+                <button id="disconnect-wallet" style="display: none;">Disconnect</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="admin-header">
+            <h2>Admin Verification Panel</h2>
+            <p>Review and verify pending patent registration requests.</p>
+        </section>
+
+        <section class="pending-requests">
+            <h3>Pending Requests</h3>
+            
+            {% if requests %}
+                <div class="requests-table-container">
+                    <table class="requests-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Requester</th>
+                                <th>Deposit</th>
+                                <th>Request Time</th>
+                                <th>Metadata</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for request in requests %}
+                                <tr>
+                                    <td>{{ request.id }}</td>
+                                    <td>{{ request.requester[:6] }}...{{ request.requester[-4:] }}</td>
+                                    <td>{{ request.depositAmount }} ETH</td>
+                                    <td>{{ request.requestTime }}</td>
+                                    <td>
+                                        <button class="btn small view-metadata-btn" data-metadata="{{ request.metadataURI }}">View Metadata</button>
+                                    </td>
+                                    <td class="actions-cell">
+                                        <button class="btn approve-btn" data-request-id="{{ request.id }}">Approve</button>
+                                        <button class="btn reject-btn" data-request-id="{{ request.id }}">Reject</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="no-requests">
+                    <p>There are no pending requests to verify.</p>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Patent Registry Blockchain Platform. All rights reserved.</p>
+    </footer>
+
+    <!-- Modal for viewing metadata -->
+    <div id="metadata-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Patent Metadata</h3>
+            <div id="metadata-content" class="metadata-display">
+                <!-- Metadata will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const connectWalletBtn = document.getElementById('connect-wallet');
+            const disconnectWalletBtn = document.getElementById('disconnect-wallet');
+            const walletAddressSpan = document.getElementById('wallet-address');
+            const metadataModal = document.getElementById('metadata-modal');
+            const metadataModalClose = document.querySelector('#metadata-modal .close');
+            const metadataContent = document.getElementById('metadata-content');
+            
+            // Check if wallet is already connected in session
+            const savedWallet = localStorage.getItem('wallet_address');
+            if (savedWallet) {
+                fetch('/connect_wallet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'wallet_address': savedWallet
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.wallet) {
+                        walletAddressSpan.textContent = `${data.wallet.substring(0, 6)}...${data.wallet.substring(data.wallet.length - 4)}`;
+                        connectWalletBtn.style.display = 'none';
+                        disconnectWalletBtn.style.display = 'inline-block';
+                    }
+                });
+            }
+            
+            // Connect wallet button
+            connectWalletBtn.addEventListener('click', async function() {
+                if (window.ethereum) {
+                    try {
+                        // Request account access
+                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        const account = accounts[0];
+                        
+                        // Save to session
+                        fetch('/connect_wallet', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'wallet_address': account
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                localStorage.setItem('wallet_address', account);
+                                walletAddressSpan.textContent = `${account.substring(0, 6)}...${account.substring(account.length - 4)}`;
+                                connectWalletBtn.style.display = 'none';
+                                disconnectWalletBtn.style.display = 'inline-block';
+                            }
+                        });
+                    } catch (error) {
+                        console.error("User denied account access");
+                    }
+                } else {
+                    alert('Please install MetaMask or another Ethereum wallet provider');
+                }
+            });
+            
+            // Disconnect wallet button
+            disconnectWalletBtn.addEventListener('click', function() {
+                fetch('/disconnect_wallet', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        localStorage.removeItem('wallet_address');
+                        walletAddressSpan.textContent = 'Wallet not connected';
+                        connectWalletBtn.style.display = 'inline-block';
+                        disconnectWalletBtn.style.display = 'none';
+                        window.location.href = '/';
+                    }
+                });
+            });
+            
+            // View metadata buttons
+            const viewMetadataBtns = document.querySelectorAll('.view-metadata-btn');
+            viewMetadataBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const metadata = this.getAttribute('data-metadata');
+                    try {
+                        const metadataObj = JSON.parse(metadata);
+                        let metadataHtml = '<div class="metadata-item-container">';
+                        
+                        for (const [key, value] of Object.entries(metadataObj)) {
+                            metadataHtml += `
+                                <div class="metadata-item">
+                                    <strong>${key}:</strong>
+                                    <span>${value}</span>
+                                </div>
+                            `;
+                        }
+                        
+                        metadataHtml += '</div>';
+                        metadataContent.innerHTML = metadataHtml;
+                    } catch (e) {
+                        metadataContent.innerHTML = `<pre>${metadata}</pre>`;
+                    }
+                    
+                    metadataModal.style.display = 'block';
+                });
+            });
+            
+            // Close metadata modal
+            metadataModalClose.addEventListener('click', function() {
+                metadataModal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target == metadataModal) {
+                    metadataModal.style.display = 'none';
+                }
+            });
+            
+            // Approve buttons
+            const approveBtns = document.querySelectorAll('.approve-btn');
+            approveBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const requestId = this.getAttribute('data-request-id');
+                    
+                    if (confirm('Are you sure you want to approve this patent registration request?')) {
+                        fetch('/admin/verify_request', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'request_id': requestId,
+                                'action': 'approve'
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message);
+                                window.location.reload();
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while processing your request');
+                        });
+                    }
+                });
+            });
+            
+            // Reject buttons
+            const rejectBtns = document.querySelectorAll('.reject-btn');
+            rejectBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const requestId = this.getAttribute('data-request-id');
+                    
+                    if (confirm('Are you sure you want to reject this patent registration request? The deposit will be refunded.')) {
+                        fetch('/admin/verify_request', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'request_id': requestId,
+                                'action': 'reject'
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message);
+                                window.location.reload();
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while processing your request');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
