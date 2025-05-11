@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register IP - IP-NFT DApp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">IP-NFT DApp</div>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('ip.list_patents') }}">Patents</a></li>
+                <li><a href="{{ url_for('ip.search_patents') }}">Search</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('ip.register_ip') }}" class="active">Register IP</a></li>
+                    <li><a href="{{ url_for('auth.profile') }}">Profile</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('auth.signup') }}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="form-container">
+            <h1>Register Intellectual Property</h1>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form action="{{ url_for('ip.register_ip') }}" method="POST" enctype="multipart/form-data" id="register-form">
+                <div class="form-group">
+                    <label for="title">Patent Title *</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description *</label>
+                    <textarea id="description" name="description" rows="5" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category *</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select a category</option>
+                        <option value="software">Software</option>
+                        <option value="hardware">Hardware</option>
+                        <option value="design">Design</option>
+                        <option value="process">Process</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="file">File (Optional)</label>
+                    <input type="file" id="file" name="file">
+                    <small>Upload a PDF, image, or other document related to your IP (max 16MB)</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="duration">Duration of Ownership (years)</label>
+                    <input type="number" id="duration" name="duration" min="1" max="100" value="10">
+                </div>
+                
+                <div class="form-group wallet-section">
+                    <h3>Blockchain Transaction</h3>
+                    <p>Your patent will be registered using the following wallet address:</p>
+                    <div class="wallet-address">{{ current_user.wallet_address }}</div>
+                    <p>Note: Registration will require a blockchain transaction. Make sure your wallet has sufficient ETH.</p>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn primary" id="register-btn">Register Patent</button>
+                    <a href="{{ url_for('index') }}" class="btn secondary">Cancel</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 IP-NFT DApp. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Form validation and submission handling
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            const title = document.getElementById('title').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const category = document.getElementById('category').value;
+            
+            if (!title || !description || !category) {
+                event.preventDefault();
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Disable submit button to prevent double submission
+            document.getElementById('register-btn').disabled = true;
+            document.getElementById('register-btn').textContent = 'Processing...';
+            
+            // Form will submit normally
+        });
+    </script>
+</body>
+</html>

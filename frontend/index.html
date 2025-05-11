@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP NFT DApp - Secure Your Intellectual Property</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#1E3A8A',secondary:'#10B981'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Inter', sans-serif;
+background-color: #F9FAFB;
+}
+.card {
+background: white;
+border-radius: 8px;
+box-shadow: 0 4px 20px rgba(30, 58, 138, 0.05);
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+transform: translateY(-4px);
+box-shadow: 0 10px 25px rgba(30, 58, 138, 0.08);
+}
+.gradient-btn {
+background: linear-gradient(135deg, #1E3A8A, #10B981);
+color: white;
+transition: all 0.3s ease;
+}
+.gradient-btn:hover {
+opacity: 0.9;
+transform: translateY(-1px);
+}
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+display: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.custom-checkbox {
+position: relative;
+display: inline-block;
+width: 20px;
+height: 20px;
+border-radius: 4px;
+border: 2px solid #4B5563;
+background-color: white;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+.custom-checkbox.checked {
+background-color: #10B981;
+border-color: #10B981;
+}
+.custom-checkbox.checked:after {
+content: '';
+position: absolute;
+left: 6px;
+top: 2px;
+width: 6px;
+height: 10px;
+border: solid white;
+border-width: 0 2px 2px 0;
+transform: rotate(45deg);
+}
+.custom-switch {
+position: relative;
+display: inline-block;
+width: 48px;
+height: 24px;
+}
+.custom-switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+.switch-slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #e5e7eb;
+transition: .4s;
+border-radius: 24px;
+}
+.switch-slider:before {
+position: absolute;
+content: "";
+height: 18px;
+width: 18px;
+left: 3px;
+bottom: 3px;
+background-color: white;
+transition: .4s;
+border-radius: 50%;
+}
+input:checked + .switch-slider {
+background-color: #10B981;
+}
+input:checked + .switch-slider:before {
+transform: translateX(24px);
+}
+.custom-radio {
+position: relative;
+display: inline-block;
+width: 20px;
+height: 20px;
+border-radius: 50%;
+border: 2px solid #4B5563;
+background-color: white;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+.custom-radio.checked {
+border-color: #10B981;
+}
+.custom-radio.checked:after {
+content: '';
+position: absolute;
+width: 10px;
+height: 10px;
+background-color: #10B981;
+border-radius: 50%;
+top: 3px;
+left: 3px;
+}
+.truncate-2 {
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+overflow: hidden;
+}
+.custom-select {
+position: relative;
+display: inline-block;
+}
+.select-selected {
+background-color: white;
+border: 1px solid rgba(75, 85, 99, 0.2);
+border-radius: 8px;
+padding: 10px 16px;
+cursor: pointer;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.select-items {
+position: absolute;
+background-color: white;
+top: 100%;
+left: 0;
+right: 0;
+z-index: 99;
+border-radius: 8px;
+margin-top: 4px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+max-height: 200px;
+overflow-y: auto;
+display: none;
+}
+.select-items div {
+padding: 10px 16px;
+cursor: pointer;
+}
+.select-items div:hover {
+background-color: rgba(16, 185, 129, 0.1);
+}
+.select-hide {
+display: none;
+}
+.select-show {
+display: block;
+}
+</style>
+</head>
+<body>
+<header class="bg-white shadow-sm sticky top-0 z-50">
+<div class="container mx-auto px-4 py-4 flex items-center justify-between">
+<div class="flex items-center">
+<a href="#" class="text-2xl font-['Pacifico'] text-primary">logo</a>
+<nav class="hidden md:flex ml-10 space-x-8">
+<a href="index.html" class="text-primary font-medium hover:text-secondary transition-colors">Home</a>
+<!-- These links will only be visible when logged in -->
+<a href="register.html" class="text-gray-600 font-medium hover:text-secondary transition-colors logged-in-only hidden">Register IP</a>
+<a href="dashboard.html" class="text-gray-600 font-medium hover:text-secondary transition-colors logged-in-only hidden">Dashboard</a>
+<a href="profile.html" class="text-gray-600 font-medium hover:text-secondary transition-colors logged-in-only hidden">Profile</a>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<div class="relative hidden md:block logged-in-only hidden">
+<input type="search" placeholder="Search patents..." class="w-64 px-4 py-2 pr-10 rounded-button border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm">
+<div class="absolute right-3 top-2.5 w-5 h-5 flex items-center justify-center text-gray-400">
+<i class="ri-search-line"></i>
+</div>
+</div>
+<!-- Login/Signup buttons for logged out users -->
+<div class="logged-out-only flex items-center space-x-4">
+<a href="login.html" class="text-primary font-medium hover:text-secondary transition-colors">Login</a>
+<a href="signup.html" class="gradient-btn px-5 py-2 !rounded-button font-medium text-sm whitespace-nowrap">Sign Up</a>
+</div>
+<!-- Connect wallet button for logged in users -->
+<button class="gradient-btn px-5 py-2 !rounded-button font-medium text-sm whitespace-nowrap logged-in-only hidden">Connect Wallet</button>
+<!-- User dropdown for logged in users -->
+<div class="relative logged-in-only hidden">
+<button id="user-menu-button" class="flex items-center space-x-2 text-gray-700 hover:text-primary transition-colors">
+<span class="user-email text-sm font-medium"></span>
+<div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<i class="ri-user-3-line"></i>
+</div>
+</button>
+<div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden">
+<a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+<a href="dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+<button id="logout-button" class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+</div>
+</div>
+<button class="md:hidden w-10 h-10 flex items-center justify-center text-gray-600">
+<i class="ri-menu-line ri-lg"></i>
+</button>
+</div>
+</div>
+</header>
+<main>
+<section class="relative overflow-hidden" style="background-image: url('https://readdy.ai/api/search-image?query=A%20futuristic%20digital%20landscape%20with%20flowing%20blue%20and%20mint%20green%20data%20streams%20against%20a%20dark%20background.%20The%20left%20side%20has%20a%20subtle%20gradient%20fading%20to%20a%20clean%20white%20area%20for%20text%20placement.%20The%20image%20should%20have%20a%20high-tech%2C%20blockchain%20aesthetic%20with%20abstract%20digital%20elements%20representing%20intellectual%20property%20and%20NFTs.%20The%20transition%20from%20image%20to%20white%20space%20must%20be%20seamless%20and%20natural.&width=1600&height=800&seq=123&orientation=landscape'); background-size: cover; background-position: center;">
+<div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent"></div>
+<div class="container mx-auto px-4 py-20 md:py-32 relative">
+<div class="max-w-2xl">
+<h1 class="text-4xl md:text-5xl font-bold text-primary mb-6">Secure Your Intellectual Property with Blockchain</h1>
+<p class="text-lg text-gray-600 mb-8">Register, protect, and monetize your patents and intellectual property as NFTs on our decentralized platform. Transparent, immutable, and secure.</p>
+<div class="flex flex-col sm:flex-row gap-4">
+<!-- Buttons for logged in users -->
+<a href="register.html" class="gradient-btn px-6 py-3 !rounded-button font-medium whitespace-nowrap text-center logged-in-only hidden">Register Your Patent</a>
+<a href="dashboard.html" class="bg-white border border-primary text-primary px-6 py-3 !rounded-button font-medium hover:bg-primary/5 transition-colors whitespace-nowrap text-center logged-in-only hidden">Explore Patents</a>
+<!-- Buttons for logged out users -->
+<a href="signup.html" class="gradient-btn px-6 py-3 !rounded-button font-medium whitespace-nowrap text-center logged-out-only">Sign Up Now</a>
+<a href="login.html" class="bg-white border border-primary text-primary px-6 py-3 !rounded-button font-medium hover:bg-primary/5 transition-colors whitespace-nowrap text-center logged-out-only">Login</a>
+</div>
+</div>
+</div>
+</section>
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<!-- Content for logged in users -->
+<div class="logged-in-only hidden">
+<div class="flex flex-col md:flex-row justify-between items-center mb-10">
+<h2 class="text-3xl font-bold text-primary mb-4 md:mb-0">Recently Registered Patents</h2>
+<div class="flex items-center">
+<div class="relative">
+<input type="search" placeholder="Filter patents..." class="w-64 px-4 py-2 pr-10 rounded-button border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm">
+<div class="absolute right-3 top-2.5 w-5 h-5 flex items-center justify-center text-gray-400">
+<i class="ri-search-line"></i>
+</div>
+</div>
+<div class="custom-select ml-4 w-40">
+<div class="select-selected flex items-center justify-between text-sm">
+<span>All Categories</span>
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-arrow-down-s-line"></i>
+</div>
+</div>
+<div class="select-items">
+<div>All Categories</div>
+<div>Technology</div>
+<div>Medical</div>
+<div>Software</div>
+<div>Hardware</div>
+<div>Art & Design</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Content for logged out users -->
+<div class="logged-out-only">
+<div class="text-center mb-10">
+<h2 class="text-3xl font-bold text-primary mb-4">Why Choose Our Platform?</h2>
+<p class="text-lg text-gray-600 max-w-3xl mx-auto">Join thousands of innovators who trust our blockchain-based solution to protect their intellectual property.</p>
+</div>
+</div>
+<!-- Patent cards for logged in users -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 logged-in-only hidden">
+<div class="card p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-lg font-semibold text-gray-800">Neural Interface for AR Applications</h3>
+<p class="text-sm text-gray-500">Technology • May 10, 2025</p>
+</div>
+<div class="bg-green-100 text-secondary px-3 py-1 rounded-full text-xs font-medium">Verified</div>
+</div>
+<p class="text-gray-600 text-sm mb-4 truncate-2">A novel neural interface system that enables direct brain-to-AR communication without invasive procedures, improving response time by 85%.</p>
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-3">
+<i class="ri-user-3-line"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500">Owner</p>
+<p class="text-sm font-medium text-gray-800 truncate">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</p>
+</div>
+</div>
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-secondary/10 rounded-full text-secondary mr-3">
+<i class="ri-link-m"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500">Transaction Hash</p>
+<p class="text-sm font-medium text-gray-800 truncate">0x3d8b2f6eeb5a1f8a8513efe5be27695f6fcc7c8b25d73...</p>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-primary text-sm font-medium hover:text-secondary transition-colors flex items-center">
+<span>View Details</span>
+<div class="w-4 h-4 flex items-center justify-center ml-1">
+<i class="ri-arrow-right-line"></i>
+</div>
+</button>
+<div class="text-xs text-gray-500">IPFS: QmT8e...</div>
+</div>
+</div>
+<div class="card p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-lg font-semibold text-gray-800">Biodegradable Microprocessor</h3>
+<p class="text-sm text-gray-500">Hardware • May 8, 2025</p>
+</div>
+<div class="bg-green-100 text-secondary px-3 py-1 rounded-full text-xs font-medium">Verified</div>
+</div>
+<p class="text-gray-600 text-sm mb-4 truncate-2">A revolutionary microprocessor design using organic compounds that naturally degrade after a predetermined lifespan, reducing e-waste by 70%.</p>
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-3">
+<i class="ri-user-3-line"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500">Owner</p>
+<p class="text-sm font-medium text-gray-800 truncate">0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199</p>
+</div>
+</div>
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-secondary/10 rounded-full text-secondary mr-3">
+<i class="ri-link-m"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500">Transaction Hash</p>
+<p class="text-sm font-medium text-gray-800 truncate">0x7c2b7f6e5b1a8a9d3f4e2c1d0b9a8f7e6d5c4b3a2...</p>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-primary text-sm font-medium hover:text-secondary transition-colors flex items-center">
+<span>View Details</span>
+<div class="w-4 h-4 flex items-center justify-center ml-1">
+<i class="ri-arrow-right-line"></i>
+</div>
+</button>
+<div class="text-xs text-gray-500">IPFS: QmR7j...</div>
+</div>
+</div>
+<div class="card p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-lg font-semibold text-gray-800">Quantum-Resistant Encryption Protocol</h3>
+<p class="text-sm text-gray-500">Software • May 7, 2025</p>
+</div>
+<div class="bg-blue-100 text-primary px-3 py-1 rounded-full text-xs font-medium">Pending</div>
+</div>
+<p class="text-gray-600 text-sm mb-4 truncate-2">A new encryption method designed to withstand attacks from quantum computers, using lattice-based cryptography with enhanced security parameters.</p>
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-3">
+<i class="ri-user-3-line"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500">Owner</p>
+<p class="text-sm font-medium text-gray-800 truncate">0xdD870fA1b7C4700F2BD7f44238821C26f7392148</p>
+</div>
+</div>
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-secondary/10 rounded-full text-secondary mr-3">
+<i class="ri-link-m"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500">Transaction Hash</p>
+<p class="text-sm font-medium text-gray-800 truncate">0x9d8c7b6a5f4e3d2c1b0a9f8e7d6c5b4a3f2e1d0c...</p>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-primary text-sm font-medium hover:text-secondary transition-colors flex items-center">
+<span>View Details</span>
+<div class="w-4 h-4 flex items-center justify-center ml-1">
+<i class="ri-arrow-right-line"></i>
+</div>
+</button>
+<div class="text-xs text-gray-500">IPFS: QmZ9p...</div>
+</div>
+</div>
+</div>
+
+<!-- Features for logged out users -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 logged-out-only">
+<div class="card p-6 flex flex-col items-center text-center">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4">
+<i class="ri-shield-check-line ri-xl"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-2">Secure & Immutable</h3>
+<p class="text-gray-600">Your intellectual property is securely stored on the blockchain, providing an immutable record of ownership that cannot be altered or disputed.</p>
+</div>
+
+<div class="card p-6 flex flex-col items-center text-center">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4">
+<i class="ri-global-line ri-xl"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-2">Global Accessibility</h3>
+<p class="text-gray-600">Your patents are accessible worldwide, allowing for greater visibility and opportunities for licensing or collaboration across borders.</p>
+</div>
+
+<div class="card p-6 flex flex-col items-center text-center">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4">
+<i class="ri-exchange-dollar-line ri-xl"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-2">Monetize Your IP</h3>
+<p class="text-gray-600">Easily license or sell your intellectual property as NFTs, creating new revenue streams and opportunities for your innovations.</p>
+</div>
+</div>
+<div class="card p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-lg font-semibold text-gray-800">Autonomous Drone Navigation System</h3>
+<p class="text-sm text-gray-500">Technology • May 5, 2025</p>
+</div>
+<div class="bg-green-100 text-secondary px-3 py-1 rounded-full text-xs font-medium">Verified</div>
+</div>
+<p class="text-gray-600 text-sm mb-4 truncate-2">An AI-powered navigation system for drones that can navigate complex environments without GPS, using computer vision and sensor fusion.</p>
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-3">
+<i class="ri-user-3-line"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500">Owner</p>
+<p class="text-sm font-medium text-gray-800 truncate">0x583031D1113aD414F02576BD6afaBfb302140225</p>
+</div>
+</div>
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-secondary/10 rounded-full text-secondary mr-3">
+<i class="ri-link-m"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500">Transaction Hash</p>
+<p class="text-sm font-medium text-gray-800 truncate">0x2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3...</p>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-primary text-sm font-medium hover:text-secondary transition-colors flex items-center">
+<span>View Details</span>
+<div class="w-4 h-4 flex items-center justify-center ml-1">
+<i class="ri-arrow-right-line"></i>
+</div>
+</button>
+<div class="text-xs text-gray-500">IPFS: QmX3k...</div>
+</div>
+</div>
+<div class="card p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-lg font-semibold text-gray-800">Carbon-Negative Concrete Formula</h3>
+<p class="text-sm text-gray-500">Material Science • May 3, 2025</p>
+</div>
+<div class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-xs font-medium">For Sale</div>
+</div>
+<p class="text-gray-600 text-sm mb-4 truncate-2">A revolutionary concrete formula that actively absorbs CO2 throughout its lifetime, reducing the carbon footprint of construction projects by up to 120%.</p>
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-3">
+<i class="ri-user-3-line"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500">Owner</p>
+<p class="text-sm font-medium text-gray-800 truncate">0x14723A09ACff6D2A60DcdF7aA4AFf308FDDC160C</p>
+</div>
+</div>
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-secondary/10 rounded-full text-secondary mr-3">
+<i class="ri-link-m"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500">Transaction Hash</p>
+<p class="text-sm font-medium text-gray-800 truncate">0x5f4e3d2c1b0a9f8e7d6c5b4a3f2e1d0c9b8a7f6...</p>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-primary text-sm font-medium hover:text-secondary transition-colors flex items-center">
+<span>View Details</span>
+<div class="w-4 h-4 flex items-center justify-center ml-1">
+<i class="ri-arrow-right-line"></i>
+</div>
+</button>
+<div class="text-xs text-gray-500">IPFS: QmP5t...</div>
+</div>
+</div>
+<div class="card p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-lg font-semibold text-gray-800">Personalized Cancer Vaccine Platform</h3>
+<p class="text-sm text-gray-500">Medical • May 1, 2025</p>
+</div>
+<div class="bg-green-100 text-secondary px-3 py-1 rounded-full text-xs font-medium">Verified</div>
+</div>
+<p class="text-gray-600 text-sm mb-4 truncate-2">A platform for creating personalized mRNA cancer vaccines based on individual tumor genomics, with a 78% improved response rate compared to standard treatments.</p>
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-3">
+<i class="ri-user-3-line"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500">Owner</p>
+<p class="text-sm font-medium text-gray-800 truncate">0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db</p>
+</div>
+</div>
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-secondary/10 rounded-full text-secondary mr-3">
+<i class="ri-link-m"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500">Transaction Hash</p>
+<p class="text-sm font-medium text-gray-800 truncate">0x1b0a9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2...</p>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-primary text-sm font-medium hover:text-secondary transition-colors flex items-center">
+<span>View Details</span>
+<div class="w-4 h-4 flex items-center justify-center ml-1">
+<i class="ri-arrow-right-line"></i>
+</div>
+</button>
+<div class="text-xs text-gray-500">IPFS: QmF7h...</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-10">
+<button class="bg-white border border-gray-200 text-gray-700 px-6 py-3 !rounded-button font-medium hover:bg-gray-50 transition-colors whitespace-nowrap flex items-center">
+<span>Load More</span>
+<div class="w-5 h-5 flex items-center justify-center ml-2">
+<i class="ri-arrow-down-line"></i>
+</div>
+</button>
+</div>
+</div>
+</section>
+<section class="py-16 bg-gradient-to-br from-primary/5 to-secondary/5">
+<div class="container mx-auto px-4">
+<div class="text-center max-w-3xl mx-auto mb-12">
+<h2 class="text-3xl font-bold text-primary mb-4">How It Works</h2>
+<p class="text-gray-600">Our platform leverages blockchain technology to create a secure, transparent, and immutable record of intellectual property ownership.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="card p-8 text-center">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/10 rounded-full text-primary mx-auto mb-6">
+<i class="ri-file-upload-line ri-xl"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-3">1. Register Your IP</h3>
+<p class="text-gray-600">Upload your intellectual property details, including title, description, and supporting files. Our system securely stores your data on IPFS.</p>
+</div>
+<div class="card p-8 text-center">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/10 rounded-full text-primary mx-auto mb-6">
+<i class="ri-shield-check-line ri-xl"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-3">2. Verification Process</h3>
+<p class="text-gray-600">Our verification system checks your submission against existing patents. Once verified, your IP is minted as an NFT on the blockchain.</p>
+</div>
+<div class="card p-8 text-center">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/10 rounded-full text-primary mx-auto mb-6">
+<i class="ri-exchange-dollar-line ri-xl"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-3">3. Monetize Your IP</h3>
+<p class="text-gray-600">List your verified IP for licensing or sale on our marketplace. Smart contracts ensure you receive fair compensation for your innovation.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="flex flex-col lg:flex-row items-center gap-12">
+<div class="w-full lg:w-1/2">
+<h2 class="text-3xl font-bold text-primary mb-6">Register Your Intellectual Property</h2>
+<p class="text-gray-600 mb-8">Protect your innovations with our blockchain-based patent registration system. Our platform provides a secure, transparent, and immutable record of your intellectual property.</p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="gradient-btn px-6 py-3 !rounded-button font-medium whitespace-nowrap">Start Registration</button>
+<button class="bg-white border border-primary text-primary px-6 py-3 !rounded-button font-medium hover:bg-primary/5 transition-colors whitespace-nowrap flex items-center">
+<div class="w-5 h-5 flex items-center justify-center mr-2">
+<i class="ri-play-circle-line"></i>
+</div>
+<span>Watch Tutorial</span>
+</button>
+</div>
+</div>
+<div class="w-full lg:w-1/2">
+<div class="card p-6">
+<h3 class="text-xl font-semibold text-gray-800 mb-6">Patent Registration Form</h3>
+<form>
+<div class="mb-4">
+<label class="block text-sm font-medium text-gray-700 mb-1">IP Title</label>
+<input type="text" class="w-full px-4 py-2 rounded-button border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" placeholder="Enter your IP title">
+</div>
+<div class="mb-4">
+<label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+<div class="custom-select w-full">
+<div class="select-selected flex items-center justify-between">
+<span>Select a category</span>
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-arrow-down-s-line"></i>
+</div>
+</div>
+<div class="select-items">
+<div>Technology</div>
+<div>Medical</div>
+<div>Software</div>
+<div>Hardware</div>
+<div>Art & Design</div>
+<div>Material Science</div>
+</div>
+</div>
+</div>
+<div class="mb-4">
+<label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+<textarea class="w-full px-4 py-2 rounded-button border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary h-32" placeholder="Describe your intellectual property"></textarea>
+</div>
+<div class="mb-4">
+<label class="block text-sm font-medium text-gray-700 mb-1">Protection Duration (Years)</label>
+<input type="number" class="w-full px-4 py-2 rounded-button border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" placeholder="Enter duration in years" min="1" max="20">
+</div>
+<div class="mb-6">
+<label class="block text-sm font-medium text-gray-700 mb-1">Supporting Files (Optional)</label>
+<div class="border border-dashed border-gray-300 rounded-button p-4 text-center cursor-pointer hover:bg-gray-50 transition-colors">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full text-primary mx-auto mb-2">
+<i class="ri-upload-cloud-line ri-lg"></i>
+</div>
+<p class="text-sm text-gray-600 mb-1">Drag and drop files here or click to browse</p>
+<p class="text-xs text-gray-500">Max file size: 50MB (PDF, JPG, PNG)</p>
+</div>
+</div>
+<div class="flex items-center mb-6">
+<div class="custom-checkbox" id="terms-checkbox"></div>
+<label class="ml-2 text-sm text-gray-600 cursor-pointer">I agree to the <a href="#" class="text-primary hover:text-secondary">Terms and Conditions</a> and confirm this is my original work</label>
+</div>
+<button type="submit" class="gradient-btn w-full py-3 !rounded-button font-medium whitespace-nowrap">Submit for Verification</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-16 bg-gradient-to-br from-primary/5 to-secondary/5">
+<div class="container mx-auto px-4">
+<div class="text-center max-w-3xl mx-auto mb-12">
+<h2 class="text-3xl font-bold text-primary mb-4">Platform Statistics</h2>
+<p class="text-gray-600">Our growing ecosystem of intellectual property and blockchain innovation.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="card p-6 h-80" id="patents-chart"></div>
+<div class="card p-6 h-80" id="categories-chart"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+<div class="card p-6 text-center">
+<div class="text-4xl font-bold text-primary mb-2">2,847</div>
+<p class="text-gray-600">Registered Patents</p>
+</div>
+<div class="card p-6 text-center">
+<div class="text-4xl font-bold text-primary mb-2">1,392</div>
+<p class="text-gray-600">Verified NFTs</p>
+</div>
+<div class="card p-6 text-center">
+<div class="text-4xl font-bold text-primary mb-2">$4.2M</div>
+<p class="text-gray-600">Trading Volume</p>
+</div>
+<div class="card p-6 text-center">
+<div class="text-4xl font-bold text-primary mb-2">12,583</div>
+<p class="text-gray-600">Active Users</p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center max-w-3xl mx-auto mb-12">
+<h2 class="text-3xl font-bold text-primary mb-4">Testimonials</h2>
+<p class="text-gray-600">What our users say about our intellectual property NFT platform.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="card p-6">
+<div class="flex items-center mb-4">
+<div class="text-yellow-400 flex">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+</div>
+</div>
+<p class="text-gray-600 mb-6">"This platform revolutionized how I protect my innovations. The blockchain verification gives me peace of mind, and I've already licensed two patents through the marketplace."</p>
+<div class="flex items-center">
+<div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+<i class="ri-user-3-fill ri-lg"></i>
+</div>
+<div class="ml-3">
+<h4 class="font-medium text-gray-800">Dr. Emily Richardson</h4>
+<p class="text-sm text-gray-500">Biotech Researcher</p>
+</div>
+</div>
+</div>
+<div class="card p-6">
+<div class="flex items-center mb-4">
+<div class="text-yellow-400 flex">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+</div>
+</div>
+<p class="text-gray-600 mb-6">"As a software developer, protecting my algorithms was always challenging. This platform makes it simple and secure. The verification process is thorough and the NFT minting is seamless."</p>
+<div class="flex items-center">
+<div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+<i class="ri-user-3-fill ri-lg"></i>
+</div>
+<div class="ml-3">
+<h4 class="font-medium text-gray-800">Michael Chen</h4>
+<p class="text-sm text-gray-500">Software Engineer</p>
+</div>
+</div>
+</div>
+<div class="card p-6">
+<div class="flex items-center mb-4">
+<div class="text-yellow-400 flex">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-half-fill"></i>
+</div>
+</div>
+<p class="text-gray-600 mb-6">"The transparency of blockchain combined with the legal framework for IP protection is brilliant. I've registered three patents and sold one already. The process was smooth and secure."</p>
+<div class="flex items-center">
+<div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+<i class="ri-user-3-fill ri-lg"></i>
+</div>
+<div class="ml-3">
+<h4 class="font-medium text-gray-800">Sophia Martinez</h4>
+<p class="text-sm text-gray-500">Industrial Designer</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-16 bg-gradient-to-br from-primary to-secondary text-white">
+<div class="container mx-auto px-4">
+<div class="flex flex-col md:flex-row items-center justify-between">
+<div class="mb-8 md:mb-0 md:mr-8">
+<h2 class="text-3xl font-bold mb-4">Ready to Secure Your Intellectual Property?</h2>
+<p class="text-white/80 mb-0">Join thousands of innovators protecting their ideas on the blockchain.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-white text-primary px-6 py-3 !rounded-button font-medium hover:bg-white/90 transition-colors whitespace-nowrap">Register Now</button>
+<button class="bg-transparent border border-white text-white px-6 py-3 !rounded-button font-medium hover:bg-white/10 transition-colors whitespace-nowrap">Learn More</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-gray-900 text-white pt-16 pb-8">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+<div>
+<a href="#" class="text-2xl font-['Pacifico'] text-white mb-4 inline-block">logo</a>
+<p class="text-gray-400 mb-6">Secure, transparent, and immutable intellectual property protection on the blockchain.</p>
+<div class="flex space-x-4">
+<a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+<i class="ri-twitter-x-fill"></i>
+</a>
+<a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+<i class="ri-linkedin-fill"></i>
+</a>
+<a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+<i class="ri-github-fill"></i>
+</a>
+<a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+<i class="ri-discord-fill"></i>
+</a>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+<ul class="space-y-2">
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Register IP</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Dashboard</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Marketplace</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4">Resources</h3>
+<ul class="space-y-2">
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">API Reference</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Tutorials</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold mb-4">Subscribe</h3>
+<p class="text-gray-400 mb-4">Stay updated with the latest news and features.</p>
+<form class="flex">
+<input type="email" placeholder="Your email" class="px-4 py-2 w-full rounded-l-button bg-gray-800 border-none text-white focus:outline-none focus:ring-2 focus:ring-primary/20">
+<button type="submit" class="gradient-btn px-4 py-2 rounded-r-button rounded-l-none whitespace-nowrap">Subscribe</button>
+</form>
+</div>
+</div>
+<div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+<p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 IP NFT Platform. All rights reserved.</p>
+<div class="flex space-x-6">
+<a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Privacy Policy</a>
+<a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Terms of Service</a>
+<a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Cookie Policy</a>
+</div>
+</div>
+</div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Custom Select
+const customSelects = document.querySelectorAll('.custom-select');
+customSelects.forEach(select => {
+const selected = select.querySelector('.select-selected');
+const items = select.querySelector('.select-items');
+const options = items.querySelectorAll('div');
+selected.addEventListener('click', function() {
+items.classList.toggle('select-show');
+});
+options.forEach(option => {
+option.addEventListener('click', function() {
+selected.querySelector('span').textContent = this.textContent;
+items.classList.remove('select-show');
+});
+});
+document.addEventListener('click', function(e) {
+if (!select.contains(e.target)) {
+items.classList.remove('select-show');
+}
+});
+});
+// Custom Checkbox
+const checkbox = document.getElementById('terms-checkbox');
+checkbox.addEventListener('click', function() {
+this.classList.toggle('checked');
+});
+});
+document.addEventListener('DOMContentLoaded', function() {
+// Patents Chart
+const patentsChart = echarts.init(document.getElementById('patents-chart'));
+const patentsOption = {
+animation: false,
+title: {
+text: 'Patent Registrations (Last 6 Months)',
+left: 'center',
+textStyle: {
+color: '#1f2937'
+}
+},
+tooltip: {
+trigger: 'axis',
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+borderColor: '#E5E7EB',
+textStyle: {
+color: '#1f2937'
+}
+},
+xAxis: {
+type: 'category',
+data: ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'],
+axisLine: {
+lineStyle: {
+color: '#E5E7EB'
+}
+},
+axisLabel: {
+color: '#1f2937'
+}
+},
+yAxis: {
+type: 'value',
+axisLine: {
+show: false
+},
+axisLabel: {
+color: '#1f2937'
+},
+splitLine: {
+lineStyle: {
+color: 'rgba(229, 231, 235, 0.5)'
+}
+}
+},
+grid: {
+left: '3%',
+right: '4%',
+bottom: '3%',
+top: '15%',
+containLabel: true
+},
+series: [
+{
+name: 'Registrations',
+type: 'line',
+smooth: true,
+symbol: 'none',
+data: [125, 180, 210, 287, 356, 423],
+lineStyle: {
+width: 3,
+color: 'rgba(87, 181, 231, 1)'
+},
+areaStyle: {
+color: {
+type: 'linear',
+x: 0,
+y: 0,
+x2: 0,
+y2: 1,
+colorStops: [{
+offset: 0, color: 'rgba(87, 181, 231, 0.2)'
+}, {
+offset: 1, color: 'rgba(87, 181, 231, 0.01)'
+}]
+}
+}
+},
+{
+name: 'Verifications',
+type: 'line',
+smooth: true,
+symbol: 'none',
+data: [95, 145, 175, 230, 290, 345],
+lineStyle: {
+width: 3,
+color: 'rgba(141, 211, 199, 1)'
+},
+areaStyle: {
+color: {
+type: 'linear',
+x: 0,
+y: 0,
+x2: 0,
+y2: 1,
+colorStops: [{
+offset: 0, color: 'rgba(141, 211, 199, 0.2)'
+}, {
+offset: 1, color: 'rgba(141, 211, 199, 0.01)'
+}]
+}
+}
+}
+]
+};
+patentsChart.setOption(patentsOption);
+// Categories Chart
+const categoriesChart = echarts.init(document.getElementById('categories-chart'));
+const categoriesOption = {
+animation: false,
+title: {
+text: 'Patents by Category',
+left: 'center',
+textStyle: {
+color: '#1f2937'
+}
+},
+tooltip: {
+trigger: 'item',
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+borderColor: '#E5E7EB',
+textStyle: {
+color: '#1f2937'
+}
+},
+legend: {
+orient: 'horizontal',
+bottom: 0,
+textStyle: {
+color: '#1f2937'
+}
+},
+series: [
+{
+name: 'Category',
+type: 'pie',
+radius: ['40%', '70%'],
+avoidLabelOverlap: false,
+itemStyle: {
+borderRadius: 8,
+borderColor: '#fff',
+borderWidth: 2
+},
+label: {
+show: false
+},
+emphasis: {
+label: {
+show: true,
+fontSize: 14,
+fontWeight: 'bold'
+}
+},
+labelLine: {
+show: false
+},
+data: [
+{ value: 735, name: 'Technology', itemStyle: { color: 'rgba(87, 181, 231, 1)' } },
+{ value: 580, name: 'Software', itemStyle: { color: 'rgba(141, 211, 199, 1)' } },
+{ value: 484, name: 'Medical', itemStyle: { color: 'rgba(251, 191, 114, 1)' } },
+{ value: 300, name: 'Hardware', itemStyle: { color: 'rgba(252, 141, 98, 1)' } }
+]
+}
+]
+};
+categoriesChart.setOption(categoriesOption);
+// Resize charts when window size changes
+window.addEventListener('resize', function() {
+patentsChart.resize();
+categoriesChart.resize();
+});
+});
+</script>
+<script>
+// Check if user is logged in
+function checkLoginStatus() {
+    const user = JSON.parse(localStorage.getItem('user') || '{"isLoggedIn": false}');
+    const loggedInElements = document.querySelectorAll('.logged-in-only');
+    const loggedOutElements = document.querySelectorAll('.logged-out-only');
+    
+    if (user.isLoggedIn) {
+        // User is logged in
+        loggedInElements.forEach(el => el.classList.remove('hidden'));
+        loggedOutElements.forEach(el => el.classList.add('hidden'));
+        
+        // Set user email in dropdown
+        const userEmailElements = document.querySelectorAll('.user-email');
+        userEmailElements.forEach(el => {
+            el.textContent = user.email || 'User';
+        });
+    } else {
+        // User is logged out
+        loggedInElements.forEach(el => el.classList.add('hidden'));
+        loggedOutElements.forEach(el => el.classList.remove('hidden'));
+    }
+}
+
+// Toggle user dropdown
+document.addEventListener('DOMContentLoaded', function() {
+    const userMenuButton = document.getElementById('user-menu-button');
+    const userDropdown = document.getElementById('user-dropdown');
+    
+    if (userMenuButton && userDropdown) {
+        userMenuButton.addEventListener('click', function() {
+            userDropdown.classList.toggle('hidden');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!userMenuButton.contains(event.target) && !userDropdown.contains(event.target)) {
+                userDropdown.classList.add('hidden');
+            }
+        });
+    }
+    
+    // Handle logout
+    const logoutButton = document.getElementById('logout-button');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function() {
+            // Call the logout API
+            fetch('/api/auth/logout', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                // Remove user from localStorage regardless of response
+                localStorage.removeItem('user');
+                window.location.reload();
+            })
+            .catch(error => {
+                // Still remove user from localStorage on error
+                localStorage.removeItem('user');
+                window.location.reload();
+            });
+        });
+    }
+    
+    // Check login status on page load
+    checkLoginStatus();
+});
+</script>
+</body>
+</html>

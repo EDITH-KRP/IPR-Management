@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP-NFT DApp - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">IP-NFT DApp</div>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('ip.list_patents') }}">Patents</a></li>
+                <li><a href="{{ url_for('ip.search_patents') }}">Search</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('ip.register_ip') }}">Register IP</a></li>
+                    <li><a href="{{ url_for('auth.profile') }}">Profile</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('auth.signup') }}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Secure Your Intellectual Property on the Blockchain</h1>
+            <p>Register, protect, and trade your intellectual property as NFTs</p>
+            {% if not current_user.is_authenticated %}
+                <div class="cta-buttons">
+                    <a href="{{ url_for('auth.signup') }}" class="btn primary">Get Started</a>
+                    <a href="{{ url_for('auth.login') }}" class="btn secondary">Login</a>
+                </div>
+            {% else %}
+                <div class="cta-buttons">
+                    <a href="{{ url_for('ip.register_ip') }}" class="btn primary">Register IP</a>
+                    <a href="{{ url_for('auth.profile') }}" class="btn secondary">View Dashboard</a>
+                </div>
+            {% endif %}
+        </section>
+
+        <section class="patent-feed">
+            <h2>Live Patent Feed</h2>
+            <div class="patent-grid" id="patent-grid">
+                <!-- Patents will be loaded here via JavaScript -->
+                <div class="loading">Loading patents...</div>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Register Your IP</h3>
+                    <p>Upload your intellectual property details and files</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Mint as NFT</h3>
+                    <p>Your IP is stored on IPFS and minted as an NFT on Ethereum</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Trade or License</h3>
+                    <p>List your IP for sale or accept bids from interested parties</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 IP-NFT DApp. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Fetch patents from blockchain
+        async function fetchPatents() {
+            try {
+                const response = await fetch('/blockchain/patents');
+                const patents = await response.json();
+                
+                const patentGrid = document.getElementById('patent-grid');
+                patentGrid.innerHTML = '';
+                
+                if (patents.length === 0) {
+                    patentGrid.innerHTML = '<div class="no-patents">No patents registered yet</div>';
+                    return;
+                }
+                
+                patents.forEach(patent => {
+                    const patentCard = document.createElement('div');
+                    patentCard.className = 'patent-card';
+                    patentCard.innerHTML = `
+                        <h3>${patent.title || 'Untitled Patent'}</h3>
+                        <p class="description">${patent.description || 'No description'}</p>
+                        <div class="patent-meta">
+                            <p><strong>Owner:</strong> ${patent.owner.substring(0, 8)}...${patent.owner.substring(36)}</p>
+                            <p><strong>Registered:</strong> ${new Date(patent.registration_time * 1000).toLocaleDateString()}</p>
+                        </div>
+                        <div class="patent-links">
+                            <a href="https://ipfs.io/ipfs/${patent.cid}" target="_blank" class="btn small">View on IPFS</a>
+                            <a href="/ip/patent/${patent.token_id}" class="btn small primary">Details</a>
+                        </div>
+                    `;
+                    patentGrid.appendChild(patentCard);
+                });
+            } catch (error) {
+                console.error('Error fetching patents:', error);
+                document.getElementById('patent-grid').innerHTML = '<div class="error">Error loading patents</div>';
+            }
+        }
+        
+        // Load patents when page loads
+        window.addEventListener('DOMContentLoaded', fetchPatents);
+    </script>
+</body>
+</html>

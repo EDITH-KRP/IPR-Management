@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - IP-NFT DApp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+        
+        .user-info {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .user-info h2 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .user-detail {
+            margin-bottom: 1rem;
+        }
+        
+        .user-detail strong {
+            display: block;
+            margin-bottom: 0.25rem;
+            color: var(--dark-color);
+        }
+        
+        .user-detail span {
+            display: block;
+            padding: 0.5rem;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            word-break: break-all;
+        }
+        
+        .tab-container {
+            margin-top: 2rem;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .patent-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .bid-item {
+            background-color: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .bid-info {
+            flex: 1;
+        }
+        
+        .bid-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">IP-NFT DApp</div>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('ip.list_patents') }}">Patents</a></li>
+                <li><a href="{{ url_for('ip.search_patents') }}">Search</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('ip.register_ip') }}">Register IP</a></li>
+                    <li><a href="{{ url_for('auth.profile') }}" class="active">Profile</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('auth.signup') }}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>User Dashboard</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="dashboard-grid">
+            <div class="user-info">
+                <h2>Account Details</h2>
+                
+                <div class="user-detail">
+                    <strong>Name</strong>
+                    <span>{{ current_user.name }}</span>
+                </div>
+                
+                <div class="user-detail">
+                    <strong>Email</strong>
+                    <span>{{ current_user.email }}</span>
+                </div>
+                
+                <div class="user-detail">
+                    <strong>Wallet Address</strong>
+                    <span>{{ current_user.wallet_address }}</span>
+                </div>
+                
+                <div class="user-detail">
+                    <strong>Member Since</strong>
+                    <span>{{ current_user.created_at.split('T')[0] }}</span>
+                </div>
+                
+                <a href="{{ url_for('ip.register_ip') }}" class="btn primary" style="margin-top: 1.5rem; width: 100%;">Register New IP</a>
+            </div>
+            
+            <div class="tab-container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="my-patents">My Patents</div>
+                    <div class="tab" data-tab="bids">Active Bids</div>
+                    <div class="tab" data-tab="history">Transaction History</div>
+                </div>
+                
+                <div class="tab-content active" id="my-patents">
+                    <div class="patent-list" id="owned-patents">
+                        <div class="loading">Loading your patents...</div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="bids">
+                    <div id="active-bids">
+                        <div class="loading">Loading your bids...</div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="history">
+                    <div id="transaction-history">
+                        <div class="loading">Loading transaction history...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 IP-NFT DApp. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+        
+        // Fetch user's patents
+        async function fetchUserPatents() {
+            try {
+                const response = await fetch('/ip/user-patents');
+                const patents = await response.json();
+                
+                const patentList = document.getElementById('owned-patents');
+                patentList.innerHTML = '';
+                
+                if (patents.length === 0) {
+                    patentList.innerHTML = '<div class="no-patents">You don\'t own any patents yet</div>';
+                    return;
+                }
+                
+                patents.forEach(patent => {
+                    const patentCard = document.createElement('div');
+                    patentCard.className = 'patent-card';
+                    patentCard.innerHTML = `
+                        <h3>${patent.title || 'Untitled Patent'}</h3>
+                        <p class="description">${patent.description || 'No description'}</p>
+                        <div class="patent-meta">
+                            <p><strong>Token ID:</strong> ${patent.token_id}</p>
+                            <p><strong>Registered:</strong> ${new Date(patent.created_at).toLocaleDateString()}</p>
+                        </div>
+                        <div class="patent-links">
+                            <a href="https://ipfs.io/ipfs/${patent.cid}" target="_blank" class="btn small">View on IPFS</a>
+                            <a href="/ip/patent/${patent.token_id}" class="btn small primary">Details</a>
+                        </div>
+                    `;
+                    patentList.appendChild(patentCard);
+                });
+            } catch (error) {
+                console.error('Error fetching patents:', error);
+                document.getElementById('owned-patents').innerHTML = '<div class="error">Error loading patents</div>';
+            }
+        }
+        
+        // Fetch user's bids
+        async function fetchUserBids() {
+            try {
+                const response = await fetch('/ip/user-bids');
+                const bids = await response.json();
+                
+                const bidsList = document.getElementById('active-bids');
+                bidsList.innerHTML = '';
+                
+                if (bids.length === 0) {
+                    bidsList.innerHTML = '<div class="no-patents">You don\'t have any active bids</div>';
+                    return;
+                }
+                
+                bids.forEach(bid => {
+                    const bidItem = document.createElement('div');
+                    bidItem.className = 'bid-item';
+                    bidItem.innerHTML = `
+                        <div class="bid-info">
+                            <h3>${bid.patent_title}</h3>
+                            <p><strong>Bid Amount:</strong> ${bid.amount} ETH</p>
+                            <p><strong>Bid Date:</strong> ${new Date(bid.bid_time).toLocaleDateString()}</p>
+                        </div>
+                        <div class="bid-actions">
+                            <a href="/ip/patent/${bid.token_id}" class="btn small">View Patent</a>
+                        </div>
+                    `;
+                    bidsList.appendChild(bidItem);
+                });
+            } catch (error) {
+                console.error('Error fetching bids:', error);
+                document.getElementById('active-bids').innerHTML = '<div class="error">Error loading bids</div>';
+            }
+        }
+        
+        // Fetch transaction history
+        async function fetchTransactionHistory() {
+            try {
+                const response = await fetch('/ip/user-transactions');
+                const transactions = await response.json();
+                
+                const historyList = document.getElementById('transaction-history');
+                historyList.innerHTML = '';
+                
+                if (transactions.length === 0) {
+                    historyList.innerHTML = '<div class="no-patents">No transaction history</div>';
+                    return;
+                }
+                
+                const historyTable = document.createElement('table');
+                historyTable.className = 'transaction-table';
+                historyTable.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Patent</th>
+                            <th>Transaction Hash</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                `;
+                
+                const tbody = historyTable.querySelector('tbody');
+                
+                transactions.forEach(tx => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${new Date(tx.timestamp).toLocaleDateString()}</td>
+                        <td>${tx.type}</td>
+                        <td><a href="/ip/patent/${tx.token_id}">${tx.patent_title}</a></td>
+                        <td><a href="https://etherscan.io/tx/${tx.tx_hash}" target="_blank">${tx.tx_hash.substring(0, 10)}...</a></td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                
+                historyList.appendChild(historyTable);
+            } catch (error) {
+                console.error('Error fetching transaction history:', error);
+                document.getElementById('transaction-history').innerHTML = '<div class="error">Error loading transaction history</div>';
+            }
+        }
+        
+        // Load data when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchUserPatents();
+            fetchUserBids();
+            fetchTransactionHistory();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Profile - IP NFT DApp</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#1E3A8A',secondary:'#10B981'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F9FAFB;
+}
+.card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(30, 58, 138, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    box-shadow: 0 6px 24px rgba(30, 58, 138, 0.08);
+}
+.gradient-btn {
+    background: linear-gradient(135deg, #1E3A8A, #10B981);
+    color: white;
+    transition: all 0.3s ease;
+}
+.gradient-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+}
+.tab-button {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.tab-button.active {
+    background-color: #1E3A8A;
+    color: white;
+}
+.custom-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+}
+.custom-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e5e7eb;
+    transition: .4s;
+    border-radius: 24px;
+}
+.switch-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .switch-slider {
+    background-color: #10B981;
+}
+input:checked + .switch-slider:before {
+    transform: translateX(24px);
+}
+.truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.status-badge {
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+.status-active {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #10B981;
+}
+.status-pending {
+    background-color: rgba(251, 191, 114, 0.2);
+    color: #D97706;
+}
+</style>
+</head>
+<body>
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div class="flex items-center">
+            <a href="index.html" class="text-2xl font-['Pacifico'] text-primary">logo</a>
+            <nav class="hidden md:flex ml-10 space-x-8">
+                <a href="index.html" class="text-gray-600 font-medium hover:text-secondary transition-colors">Home</a>
+                <a href="register.html" class="text-gray-600 font-medium hover:text-secondary transition-colors">Register IP</a>
+                <a href="dashboard.html" class="text-gray-600 font-medium hover:text-secondary transition-colors">Dashboard</a>
+                <a href="profile.html" class="text-primary font-medium hover:text-secondary transition-colors">Profile</a>
+            </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="relative hidden md:block">
+                <input type="search" placeholder="Search patents..." class="w-64 px-4 py-2 pr-10 rounded-button border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm">
+                <div class="absolute right-3 top-2.5 w-5 h-5 flex items-center justify-center text-gray-400">
+                    <i class="ri-search-line"></i>
+                </div>
+            </div>
+            <button class="gradient-btn px-5 py-2 !rounded-button font-medium text-sm whitespace-nowrap">Connect Wallet</button>
+            <button class="md:hidden w-10 h-10 flex items-center justify-center text-gray-600">
+                <i class="ri-menu-line ri-lg"></i>
+            </button>
+        </div>
+    </div>
+</header>
+
+<main class="py-8 md:py-12">
+    <div class="container mx-auto px-4">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">User Profile</h1>
+            <p class="text-gray-600">Manage your account settings and view your IP portfolio</p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Profile Sidebar -->
+            <div class="w-full lg:w-1/3">
+                <div class="card p-6 mb-6">
+                    <div class="flex flex-col items-center text-center mb-6">
+                        <div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center text-primary text-3xl mb-4">
+                            <i class="ri-user-3-line"></i>
+                        </div>
+                        <h2 class="text-xl font-bold text-gray-800">John Doe</h2>
+                        <p class="text-gray-500 text-sm mb-2">john.doe@example.com</p>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <div class="w-4 h-4 flex items-center justify-center mr-1 text-secondary">
+                                <i class="ri-wallet-3-line"></i>
+                            </div>
+                            <span class="truncate max-w-[200px]">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</span>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-100 pt-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-600">Member Since</span>
+                            <span class="text-sm font-medium">May 2025</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm text-gray-600">Patents Registered</span>
+                            <span class="text-sm font-medium">14</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">Patents Sold</span>
+                            <span class="text-sm font-medium">3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Account Settings</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-700 font-medium">Email Notifications</p>
+                                <p class="text-gray-500 text-sm">Receive updates about your patents</p>
+                            </div>
+                            <label class="custom-switch">
+                                <input type="checkbox" checked>
+                                <span class="switch-slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-700 font-medium">Two-Factor Authentication</p>
+                                <p class="text-gray-500 text-sm">Add an extra layer of security</p>
+                            </div>
+                            <label class="custom-switch">
+                                <input type="checkbox">
+                                <span class="switch-slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-700 font-medium">Public Profile</p>
+                                <p class="text-gray-500 text-sm">Allow others to see your profile</p>
+                            </div>
+                            <label class="custom-switch">
+                                <input type="checkbox" checked>
+                                <span class="switch-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100">
+                        <button class="w-full bg-white border border-primary text-primary px-4 py-2 !rounded-button font-medium hover:bg-primary/5 transition-colors">Edit Profile</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="w-full lg:w-2/3">
+                <div class="card p-6 mb-8">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4 md:mb-0">My IP Portfolio</h2>
+                        <div class="flex bg-gray-100 p-1 rounded-full">
+                            <button class="tab-button active" data-view="all">
+                                All
+                            </button>
+                            <button class="tab-button" data-view="active">
+                                Active
+                            </button>
+                            <button class="tab-button" data-view="pending">
+                                Pending
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- IP Portfolio Items -->
+                    <div class="space-y-4">
+                        <div class="card p-4 hover:shadow-md transition-shadow">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between">
+                                <div class="mb-4 md:mb-0">
+                                    <div class="flex items-center mb-2">
+                                        <h3 class="text-lg font-semibold text-gray-800 mr-3">Neural Interface for AR Applications</h3>
+                                        <span class="status-badge status-active">Active</span>
+                                    </div>
+                                    <p class="text-sm text-gray-500 mb-2">Technology • Registered May 10, 2025</p>
+                                    <p class="text-sm text-gray-600 truncate-2">A novel neural interface system that enables direct brain-to-AR communication without invasive procedures.</p>
+                                </div>
+                                <div class="flex flex-col items-end">
+                                    <div class="text-xs text-gray-500 mb-2">Token ID: #1234</div>
+                                    <button class="text-primary text-sm font-medium hover:text-secondary transition-colors flex items-center">
+                                        <span>View Details</span>
+                                        <div class="w-4 h-4 flex items-center justify-center ml-1">
+                                            <i class="ri-arrow-right-line"></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card p-4 hover:shadow-md transition-shadow">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between">
+                                <div class="mb-4 md:mb-0">
+                                    <div class="flex items-center mb-2">
+                                        <h3 class="text-lg font-semibold text-gray-800 mr-3">Biodegradable Microprocessor</h3>
+                                        <span class="status-badge status-active">Active</span>
+                                    </div>
+                                    <p class="text-sm text-gray-500 mb-2">Hardware • Registered May 8, 2025</p>
+                                    <p class="text-sm text-gray-600 truncate-2">A revolutionary microprocessor design using organic compounds that naturally degrade after a predetermined lifespan.</p>
+                                </div>
+                                <div class="flex flex-col items-end">
+                                    <div class="text-xs text-gray-500 mb-2">Token ID: #1235</div>
+                                    <button class="text-primary text-sm font-medium hover:text-secondary transition-colors flex items-center">
+                                        <span>View Details</span>
+                                        <div class="w-4 h-4 flex items-center justify-center ml-1">
+                                            <i class="ri-arrow-right-line"></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card p-4 hover:shadow-md transition-shadow">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between">
+                                <div class="mb-4 md:mb-0">
+                                    <div class="flex items-center mb-2">
+                                        <h3 class="text-lg font-semibold text-gray-800 mr-3">Quantum-Resistant Encryption Protocol</h3>
+                                        <span class="status-badge status-pending">Pending</span>
+                                    </div>
+                                    <p class="text-sm text-gray-500 mb-2">Software • Submitted May 7, 2025</p>
+                                    <p class="text-sm text-gray-600 truncate-2">A new encryption method designed to withstand attacks from quantum computers, using lattice-based cryptography.</p>
+                                </div>
+                                <div class="flex flex-col items-end">
+                                    <div class="text-xs text-gray-500 mb-2">Token ID: Pending</div>
+                                    <button class="text-primary text-sm font-medium hover:text-secondary transition-colors flex items-center">
+                                        <span>View Details</span>
+                                        <div class="w-4 h-4 flex items-center justify-center ml-1">
+                                            <i class="ri-arrow-right-line"></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <button class="text-primary text-sm font-medium hover:text-secondary transition-colors flex items-center justify-center mx-auto">
+                            <span>Load More</span>
+                            <div class="w-4 h-4 flex items-center justify-center ml-1">
+                                <i class="ri-arrow-down-line"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Transaction History -->
+                <div class="card p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Transaction History</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="border-b border-gray-200">
+                                    <th class="text-left py-3 px-4 text-sm font-medium text-gray-500">Date</th>
+                                    <th class="text-left py-3 px-4 text-sm font-medium text-gray-500">Type</th>
+                                    <th class="text-left py-3 px-4 text-sm font-medium text-gray-500">Patent</th>
+                                    <th class="text-left py-3 px-4 text-sm font-medium text-gray-500">Amount</th>
+                                    <th class="text-left py-3 px-4 text-sm font-medium text-gray-500">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 px-4 text-sm text-gray-700">May 10, 2025</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">Registration</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">Neural Interface for AR Applications</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">0.05 ETH</td>
+                                    <td class="py-3 px-4">
+                                        <span class="status-badge status-active">Completed</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 px-4 text-sm text-gray-700">May 8, 2025</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">Registration</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">Biodegradable Microprocessor</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">0.05 ETH</td>
+                                    <td class="py-3 px-4">
+                                        <span class="status-badge status-active">Completed</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 px-4 text-sm text-gray-700">May 7, 2025</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">Registration</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">Quantum-Resistant Encryption Protocol</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">0.05 ETH</td>
+                                    <td class="py-3 px-4">
+                                        <span class="status-badge status-pending">Pending</span>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 px-4 text-sm text-gray-700">May 1, 2025</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">Sale</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">Autonomous Drone Navigation System</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">1.2 ETH</td>
+                                    <td class="py-3 px-4">
+                                        <span class="status-badge status-active">Completed</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-white border-t border-gray-200 mt-12">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <a href="#" class="text-xl font-['Pacifico'] text-primary">logo</a>
+                <p class="text-gray-500 text-sm mt-2">Secure your intellectual property on the blockchain</p>
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="text-gray-500 hover:text-primary transition-colors">
+                    <i class="ri-twitter-x-line"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-primary transition-colors">
+                    <i class="ri-linkedin-fill"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-primary transition-colors">
+                    <i class="ri-github-fill"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-primary transition-colors">
+                    <i class="ri-discord-fill"></i>
+                </a>
+            </div>
+        </div>
+        <div class="border-t border-gray-100 mt-6 pt-6 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 IP NFT DApp. All rights reserved.</p>
+            <div class="flex space-x-6">
+                <a href="#" class="text-gray-500 hover:text-primary transition-colors text-sm">Privacy Policy</a>
+                <a href="#" class="text-gray-500 hover:text-primary transition-colors text-sm">Terms of Service</a>
+                <a href="#" class="text-gray-500 hover:text-primary transition-colors text-sm">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Tab switching functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Here you would typically filter the portfolio items based on the selected tab
+            const view = this.getAttribute('data-view');
+            console.log('Selected view:', view);
+            
+            // For demonstration purposes only - in a real app you would filter the items
+            if (view === 'active') {
+                // Show only active items
+            } else if (view === 'pending') {
+                // Show only pending items
+            } else {
+                // Show all items
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>

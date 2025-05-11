@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Patent for Sale - IP-NFT DApp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">IP-NFT DApp</div>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('ip.list_patents') }}">Patents</a></li>
+                <li><a href="{{ url_for('ip.search_patents') }}">Search</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('ip.register_ip') }}">Register IP</a></li>
+                    <li><a href="{{ url_for('auth.profile') }}">Profile</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('auth.signup') }}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="form-container">
+            <h1>List Patent for Sale</h1>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <div class="patent-summary">
+                <h2>{{ patent.title }}</h2>
+                <p>Token ID: {{ patent.token_id }}</p>
+            </div>
+            
+            <form action="{{ url_for('ip.list_for_sale', token_id=patent.token_id) }}" method="POST" id="sale-form">
+                <div class="form-group">
+                    <label for="min_bid">Minimum Bid (ETH)</label>
+                    <input type="number" id="min_bid" name="min_bid" min="0.01" step="0.01" required>
+                    <small>The minimum amount a bidder must offer</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="duration">Duration (days)</label>
+                    <input type="number" id="duration" name="duration" min="1" max="90" value="30" required>
+                    <small>How long the patent will be listed for sale</small>
+                </div>
+                
+                <div class="form-group wallet-section">
+                    <h3>Blockchain Transaction</h3>
+                    <p>Your patent will be listed for sale using the following wallet address:</p>
+                    <div class="wallet-address">{{ current_user.wallet_address }}</div>
+                    <p>Note: Listing will require a blockchain transaction. Make sure your wallet has sufficient ETH.</p>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn primary" id="list-btn">List for Sale</button>
+                    <a href="{{ url_for('ip.view_patent', token_id=patent.token_id) }}" class="btn secondary">Cancel</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 IP-NFT DApp. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Form validation
+        document.getElementById('sale-form').addEventListener('submit', function(event) {
+            const minBid = document.getElementById('min_bid').value;
+            const duration = document.getElementById('duration').value;
+            
+            if (minBid <= 0) {
+                event.preventDefault();
+                alert('Minimum bid must be greater than 0');
+                return;
+            }
+            
+            if (duration < 1 || duration > 90) {
+                event.preventDefault();
+                alert('Duration must be between 1 and 90 days');
+                return;
+            }
+            
+            // Disable submit button to prevent double submission
+            document.getElementById('list-btn').disabled = true;
+            document.getElementById('list-btn').textContent = 'Processing...';
+            
+            // Form will submit normally
+        });
+    </script>
+</body>
+</html>

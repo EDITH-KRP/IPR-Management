@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Patents - IP-NFT DApp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .search-container {
+            margin-bottom: 2rem;
+        }
+        
+        .search-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .search-form input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+        
+        .search-results {
+            margin-top: 2rem;
+        }
+        
+        .search-results h2 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-meta {
+            margin-bottom: 1.5rem;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">IP-NFT DApp</div>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('ip.list_patents') }}">Patents</a></li>
+                <li><a href="{{ url_for('ip.search_patents') }}" class="active">Search</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('ip.register_ip') }}">Register IP</a></li>
+                    <li><a href="{{ url_for('auth.profile') }}">Profile</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('auth.signup') }}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Search Patents</h1>
+        
+        <div class="search-container">
+            <form action="{{ url_for('ip.search_patents') }}" method="GET" class="search-form">
+                <input type="text" name="q" placeholder="Search by title, description, or category..." value="{{ query or '' }}">
+                <button type="submit" class="btn primary">Search</button>
+            </form>
+        </div>
+        
+        {% if query %}
+        <div class="search-results">
+            <div class="search-meta">
+                {% if patents|length == 0 %}
+                    <p>No results found for "{{ query }}"</p>
+                {% elif patents|length == 1 %}
+                    <p>1 result found for "{{ query }}"</p>
+                {% else %}
+                    <p>{{ patents|length }} results found for "{{ query }}"</p>
+                {% endif %}
+            </div>
+            
+            {% if patents|length > 0 %}
+            <div class="patent-grid">
+                {% for patent in patents %}
+                <div class="patent-card">
+                    <h3>{{ patent.title }}</h3>
+                    <p class="description">{{ patent.description }}</p>
+                    <div class="patent-meta">
+                        <p><strong>Category:</strong> {{ patent.category }}</p>
+                        <p><strong>Registered:</strong> {{ patent.created_at.split('T')[0] }}</p>
+                    </div>
+                    <div class="patent-links">
+                        <a href="https://ipfs.io/ipfs/{{ patent.cid }}" target="_blank" class="btn small">View on IPFS</a>
+                        <a href="{{ url_for('ip.view_patent', token_id=patent.token_id) }}" class="btn small primary">Details</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="search-instructions">
+            <h2>Search Tips</h2>
+            <ul>
+                <li>Search by patent title, description, or category</li>
+                <li>Use specific keywords for better results</li>
+                <li>Search is case-insensitive</li>
+            </ul>
+            
+            <h3>Popular Categories</h3>
+            <div class="category-buttons">
+                <a href="{{ url_for('ip.search_patents', q='software') }}" class="btn secondary">Software</a>
+                <a href="{{ url_for('ip.search_patents', q='hardware') }}" class="btn secondary">Hardware</a>
+                <a href="{{ url_for('ip.search_patents', q='design') }}" class="btn secondary">Design</a>
+                <a href="{{ url_for('ip.search_patents', q='process') }}" class="btn secondary">Process</a>
+            </div>
+        </div>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2023 IP-NFT DApp. All rights reserved.</p>
+    </footer>
+</body>
+</html>

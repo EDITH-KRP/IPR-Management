@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ metadata.title }} - IP-NFT DApp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .patent-details {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .patent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .patent-title {
+            flex: 1;
+        }
+        
+        .patent-title h1 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .patent-category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: var(--light-color);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .patent-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .patent-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .meta-item {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+        }
+        
+        .meta-item strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .meta-item span {
+            word-break: break-all;
+        }
+        
+        .patent-description {
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        
+        .patent-file {
+            margin-bottom: 2rem;
+        }
+        
+        .patent-file a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            color: var(--dark-color);
+            text-decoration: none;
+        }
+        
+        .patent-file a:hover {
+            background-color: #e9ecef;
+        }
+        
+        .sale-section {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+        }
+        
+        .sale-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .bid-form {
+            margin-top: 1.5rem;
+        }
+        
+        .bid-form .form-group {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+        
+        .bid-form .form-group label {
+            flex: 1;
+        }
+        
+        .bid-form .form-group input {
+            flex: 2;
+        }
+        
+        .bid-list {
+            margin-top: 2rem;
+        }
+        
+        .bid-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+        
+        .bid-info {
+            flex: 1;
+        }
+        
+        .bid-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .patent-header {
+                flex-direction: column;
+            }
+            
+            .patent-actions {
+                margin-top: 1rem;
+                width: 100%;
+            }
+            
+            .patent-actions .btn {
+                flex: 1;
+                text-align: center;
+            }
+            
+            .bid-form .form-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">IP-NFT DApp</div>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('ip.list_patents') }}">Patents</a></li>
+                <li><a href="{{ url_for('ip.search_patents') }}">Search</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('ip.register_ip') }}">Register IP</a></li>
+                    <li><a href="{{ url_for('auth.profile') }}">Profile</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('auth.signup') }}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="patent-details">
+            <div class="patent-header">
+                <div class="patent-title">
+                    <h1>{{ metadata.title }}</h1>
+                    <div class="patent-category">{{ metadata.category }}</div>
+                </div>
+                
+                <div class="patent-actions">
+                    <a href="https://ipfs.io/ipfs/{{ patent.cid }}" target="_blank" class="btn secondary">View on IPFS</a>
+                    {% if current_user.is_authenticated and current_user.wallet_address == patent.owner %}
+                        {% if not patent.is_for_sale %}
+                            <a href="{{ url_for('ip.list_for_sale', token_id=patent.token_id) }}" class="btn primary">List for Sale</a>
+                        {% else %}
+                            <button class="btn" disabled>Listed for Sale</button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="patent-meta">
+                <div class="meta-item">
+                    <strong>Owner</strong>
+                    <span>{{ patent.owner }}</span>
+                </div>
+                
+                <div class="meta-item">
+                    <strong>Token ID</strong>
+                    <span>{{ patent.token_id }}</span>
+                </div>
+                
+                <div class="meta-item">
+                    <strong>Registration Date</strong>
+                    <span>{{ metadata.createdAt.split('T')[0] }}</span>
+                </div>
+                
+                <div class="meta-item">
+                    <strong>Duration</strong>
+                    <span>{{ metadata.duration }} years</span>
+                </div>
+            </div>
+            
+            <div class="patent-description">
+                <h2>Description</h2>
+                <p>{{ metadata.description }}</p>
+            </div>
+            
+            {% if metadata.file_cid %}
+            <div class="patent-file">
+                <h2>Attached File</h2>
+                <a href="https://ipfs.io/ipfs/{{ metadata.file_cid }}" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="12" y1="18" x2="12" y2="12"></line>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                    View Attached File
+                </a>
+            </div>
+            {% endif %}
+            
+            <div class="patent-meta">
+                <div class="meta-item">
+                    <strong>Transaction Hash</strong>
+                    <span>
+                        <a href="https://etherscan.io/tx/{{ patent.tx_hash }}" target="_blank">
+                            {{ patent.tx_hash }}
+                        </a>
+                    </span>
+                </div>
+                
+                <div class="meta-item">
+                    <strong>IPFS CID</strong>
+                    <span>{{ patent.cid }}</span>
+                </div>
+            </div>
+        </div>
+        
+        {% if patent.is_for_sale %}
+        <div class="sale-section">
+            <h2>This Patent is For Sale</h2>
+            
+            <div class="meta-item">
+                <strong>Minimum Bid</strong>
+                <span>{{ patent.min_bid }} ETH</span>
+            </div>
+            
+            <div class="meta-item">
+                <strong>Sale Ends</strong>
+                <span>{{ patent.sale_end_time }}</span>
+            </div>
+            
+            {% if current_user.is_authenticated and current_user.wallet_address != patent.owner %}
+            <div class="bid-form">
+                <h3>Place a Bid</h3>
+                <form action="{{ url_for('ip.place_bid', token_id=patent.token_id) }}" method="POST">
+                    <div class="form-group">
+                        <label for="bid_amount">
+                            Bid Amount (ETH)
+                            <small>Must be at least {{ patent.min_bid }} ETH</small>
+                        </label>
+                        <input type="number" id="bid_amount" name="bid_amount" min="{{ patent.min_bid }}" step="0.01" required>
+                        <button type="submit" class="btn primary">Place Bid</button>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
+            
+            {% if current_user.is_authenticated and current_user.wallet_address == patent.owner %}
+            <div class="bid-list">
+                <h3>Current Bids</h3>
+                <div id="bids-container">
+                    <div class="loading">Loading bids...</div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2023 IP-NFT DApp. All rights reserved.</p>
+    </footer>
+
+    {% if current_user.is_authenticated and current_user.wallet_address == patent.owner and patent.is_for_sale %}
+    <script>
+        // Fetch bids for the patent
+        async function fetchBids() {
+            try {
+                const response = await fetch('/ip/bids/{{ patent.token_id }}');
+                const bids = await response.json();
+                
+                const bidsContainer = document.getElementById('bids-container');
+                bidsContainer.innerHTML = '';
+                
+                if (bids.length === 0) {
+                    bidsContainer.innerHTML = '<div class="no-bids">No bids yet</div>';
+                    return;
+                }
+                
+                bids.forEach(bid => {
+                    const bidItem = document.createElement('div');
+                    bidItem.className = 'bid-item';
+                    bidItem.innerHTML = `
+                        <div class="bid-info">
+                            <p><strong>Bidder:</strong> ${bid.bidder_address.substring(0, 8)}...${bid.bidder_address.substring(36)}</p>
+                            <p><strong>Amount:</strong> ${bid.amount} ETH</p>
+                            <p><strong>Time:</strong> ${new Date(bid.bid_time).toLocaleString()}</p>
+                        </div>
+                        <div class="bid-actions">
+                            <form action="{{ url_for('ip.accept_bid', token_id=patent.token_id) }}/${bid.bidder_address}" method="POST">
+                                <button type="submit" class="btn primary">Accept Bid</button>
+                            </form>
+                        </div>
+                    `;
+                    bidsContainer.appendChild(bidItem);
+                });
+            } catch (error) {
+                console.error('Error fetching bids:', error);
+                document.getElementById('bids-container').innerHTML = '<div class="error">Error loading bids</div>';
+            }
+        }
+        
+        // Load bids when page loads
+        window.addEventListener('DOMContentLoaded', fetchBids);
+    </script>
+    {% endif %}
+</body>
+</html>
